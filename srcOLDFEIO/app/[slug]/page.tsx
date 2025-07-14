@@ -77,11 +77,8 @@ export default function AnniversaryPage() {
 
   return (
     <div className="main-container">
-      <div className="floating-shapes">
-        <div className="shape"></div>
-        <div className="shape"></div>
-        <div className="shape"></div>
-      </div>
+      {/* Fundo clean e minimalista */}
+      <div className="clean-background"></div>
 
       {/* Hero Section - Cabeçalho principal */}
       <section className="section-hero">
@@ -108,10 +105,10 @@ export default function AnniversaryPage() {
               {/* Info rápida em cards */}
               <div className="row g-4 mt-5">
                 <div className="col-md-4">
-                  <div className="modern-card p-4 text-center">
-                    <i className="fas fa-calendar" style={{ fontSize: '2rem', color: 'var(--primary-blue)', marginBottom: '1rem' }}></i>
-                    <h6 className="fw-bold mb-2">Data</h6>
-                    <p className="mb-0">{new Date(anniversary.eventDate).toLocaleDateString('pt-BR', {
+                  <div className="info-card text-center">
+                    <i className="fas fa-calendar" style={{ color: 'var(--sky-blue)' }}></i>
+                    <h6 className="fw-bold mb-2 text-white">Data</h6>
+                    <p className="mb-0 text-white">{new Date(anniversary.eventDate).toLocaleDateString('pt-BR', {
                       weekday: 'short',
                       day: 'numeric',
                       month: 'short'
@@ -119,17 +116,17 @@ export default function AnniversaryPage() {
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div className="modern-card p-4 text-center">
-                    <i className="fas fa-clock" style={{ fontSize: '2rem', color: 'var(--secondary-blue)', marginBottom: '1rem' }}></i>
-                    <h6 className="fw-bold mb-2">Horário</h6>
-                    <p className="mb-0">{anniversary.eventTime}</p>
+                  <div className="info-card text-center">
+                    <i className="fas fa-clock" style={{ color: 'var(--ice-blue)' }}></i>
+                    <h6 className="fw-bold mb-2 text-white">Horário</h6>
+                    <p className="mb-0 text-white">{anniversary.eventTime}</p>
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div className="modern-card p-4 text-center">
-                    <i className="fas fa-map-marker-alt" style={{ fontSize: '2rem', color: 'var(--accent-blue)', marginBottom: '1rem' }}></i>
-                    <h6 className="fw-bold mb-2">Local</h6>
-                    <p className="mb-0">{anniversary.address}</p>
+                  <div className="info-card text-center">
+                    <i className="fas fa-map-marker-alt" style={{ color: 'var(--ocean-blue)' }}></i>
+                    <h6 className="fw-bold mb-2 text-white">Local</h6>
+                    <p className="mb-0 text-white">{anniversary.address}</p>
                   </div>
                 </div>
               </div>

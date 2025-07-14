@@ -118,7 +118,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
             ))}
             
             {/* Card PIX como último item */}
-            {/* <div className="col-md-6 col-lg-4 mb-4">
+            <div className="col-md-6 col-lg-4 mb-4">
               <div className="gift-card h-100" style={{ 
                 background: 'var(--gradient-secondary)',
                 color: 'white',
@@ -177,13 +177,13 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       )}
 
       {/* Presentes já comprados */}
-      {/* {purchasedGifts.length > 0 && (
+      {purchasedGifts.length > 0 && (
         <div>
           <div className="text-center mb-4">
             <h3 className="text-white mb-3">
@@ -222,7 +222,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
             ))}
           </div>
         </div>
-      )} */}
+      )}
 
       {/* Modal de confirmação */}
       {showModal && (

@@ -1,42 +1,36 @@
-/* ===== FESTA DIVERTIDA DO DANIEL - DESIGN COLORIDO E ALEGRE ===== */
+/* ===== ALL BLUES THEME - DESIGN ELEGANTE E MODERNO ===== */
 
-/* Paleta de cores divertida para festa infantil */
+/* Nova paleta de cores All Blues */
 :root {
   /* Azuis principais */
-  --azul-principal: #1e40af;
-  --azul-claro: #38bdf8;
-  --azul-bebe: #7dd3fc;
-  --azul-suave: #e0f2fe;
+  --midnight-blue: #0f172a;
+  --navy-blue: #1e293b;
+  --royal-blue: #1e40af;
+  --ocean-blue: #0ea5e9;
+  --sky-blue: #38bdf8;
+  --ice-blue: #7dd3fc;
+  --pearl-blue: #e0f2fe;
   
-  /* Cores complementares divertidas */
-  --laranja-alegre: #f97316;
-  --amarelo-sol: #fbbf24;
-  --verde-diversao: #22c55e;
-  --rosa-doce: #ec4899;
-  --roxo-magico: #8b5cf6;
-  --vermelho-festa: #ef4444;
+  /* Gradientes elegantes */
+  --gradient-primary: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #0ea5e9 100%);
+  --gradient-secondary: linear-gradient(135deg, #1e40af 0%, #38bdf8 50%, #7dd3fc 100%);
+  --gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  --gradient-light: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
   
-  /* Gradientes festivos */
-  --gradient-festa: linear-gradient(135deg, #1e40af 0%, #38bdf8 25%, #22c55e 50%, #fbbf24 75%, #f97316 100%);
-  --gradient-azul-diversao: linear-gradient(135deg, #1e40af 0%, #38bdf8 50%, #7dd3fc 100%);
-  --gradient-arco-iris: linear-gradient(135deg, #ec4899 0%, #8b5cf6 20%, #1e40af 40%, #22c55e 60%, #fbbf24 80%, #f97316 100%);
-  --gradient-ceu: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 50%, #e0f2fe 100%);
+  /* Sombras elegantes */
+  --shadow-soft: 0 4px 20px rgba(30, 64, 175, 0.1);
+  --shadow-medium: 0 8px 30px rgba(30, 64, 175, 0.15);
+  --shadow-strong: 0 20px 60px rgba(30, 64, 175, 0.25);
+  --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.3);
   
-  /* Sombras coloridas */
-  --shadow-azul: 0 8px 30px rgba(30, 64, 175, 0.2);
-  --shadow-colorida: 0 8px 30px rgba(56, 189, 248, 0.3);
-  --shadow-magica: 0 15px 40px rgba(139, 92, 246, 0.3);
-  --shadow-alegre: 0 10px 25px rgba(249, 115, 22, 0.2);
-  
-  /* Tipografia divertida */
+  /* Tipografia moderna */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   
-  /* Espaçamentos arredondados */
-  --radius-sm: 16px;
-  --radius-md: 24px;
+  /* Espaçamentos */
+  --radius-sm: 12px;
+  --radius-md: 20px;
   --radius-lg: 32px;
-  --radius-xl: 48px;
 }
 
 /* Reset e base */
@@ -48,12 +42,11 @@
 
 body {
   font-family: var(--font-body);
-  background: var(--gradient-azul-diversao);
+  background: var(--gradient-primary);
   min-height: 100vh;
-  color: var(--azul-principal);
+  color: var(--navy-blue);
   overflow-x: hidden;
   line-height: 1.6;
-  position: relative;
 }
 
 /* Container principal */
@@ -72,21 +65,13 @@ h1, h2, h3, h4, h5, h6 {
 .section-title {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
-  background: var(--gradient-azul-diversao);
+  background: var(--gradient-secondary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
-  position: relative;
-  animation: blue-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes blue-glow {
-  0% { filter: drop-shadow(0 0 10px rgba(30, 64, 175, 0.4)); }
-  50% { filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.5)); }
-  100% { filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.4)); }
 }
 
 .section-subtitle {
@@ -100,87 +85,54 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
-/* ===== CARDS DIVERTIDOS ===== */
+/* ===== CARDS MODERNOS ===== */
 .modern-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-colorida);
-  border: 3px solid transparent;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), var(--gradient-azul-diversao);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
 .modern-card::before {
-  content: '🎉';
+  content: '';
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  opacity: 0.3;
-  animation: party-bounce 2s ease-in-out infinite;
-}
-
-@keyframes party-bounce {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.2) rotate(10deg); }
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-accent);
 }
 
 .modern-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-magica);
-  animation: card-party 0.6s ease-in-out;
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
-@keyframes card-party {
-  0%, 100% { transform: translateY(-8px) scale(1.02) rotate(0deg); }
-  25% { transform: translateY(-8px) scale(1.02) rotate(1deg); }
-  75% { transform: translateY(-8px) scale(1.02) rotate(-1deg); }
-}
-
-/* Card com glassmorphism colorido */
+/* Card com glassmorphism azul */
 .glass-card {
   background: rgba(30, 64, 175, 0.1);
   backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  border: 2px solid transparent;
-  background-image: linear-gradient(rgba(30, 64, 175, 0.1), rgba(30, 64, 175, 0.1)), var(--gradient-azul-diversao);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  box-shadow: var(--shadow-colorida);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: var(--shadow-medium);
   transition: all 0.4s ease;
-  position: relative;
-}
-
-.glass-card::before {
-  content: '✨';
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.2rem;
-  opacity: 0.4;
-  animation: sparkle 2s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.4; }
-  50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
 }
 
 .glass-card:hover {
-  background-image: linear-gradient(rgba(30, 64, 175, 0.15), rgba(30, 64, 175, 0.15)), var(--gradient-azul-diversao);
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-colorida);
+  background: rgba(30, 64, 175, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-4px);
 }
 
-/* ===== BOTÕES PADRÃO (mantendo compatibilidade) ===== */
+/* ===== BOTÕES PADRÃO (seguindo o padrão "Ver na loja") ===== */
 .btn-primary-standard {
-  background: var(--azul-claro);
-  border: 2px solid var(--azul-claro);
+  background: var(--ocean-blue);
+  border: 2px solid var(--ocean-blue);
   border-radius: 50px;
   padding: 12px 24px;
   font-weight: 600;
@@ -192,27 +144,25 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-azul);
 }
 
 .btn-primary-standard:hover {
-  background: var(--azul-bebe);
-  border-color: var(--azul-bebe);
+  background: var(--sky-blue);
+  border-color: var(--sky-blue);
   color: white;
   text-decoration: none;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-colorida);
+  transform: translateY(-1px);
 }
 
 .btn-secondary-standard {
   background: transparent;
-  border: 2px solid var(--azul-claro);
+  border: 2px solid var(--ocean-blue);
   border-radius: 50px;
   padding: 12px 24px;
   font-weight: 600;
   font-family: var(--font-display);
   font-size: 1rem;
-  color: var(--azul-claro);
+  color: var(--ocean-blue);
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
@@ -221,125 +171,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary-standard:hover {
-  background: var(--azul-claro);
+  background: var(--ocean-blue);
   color: white;
   text-decoration: none;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-azul);
+  transform: translateY(-1px);
 }
 
-/* Botões Bootstrap - compatibilidade */
-.btn-primary {
-  background: var(--azul-principal) !important;
-  border-color: var(--azul-principal) !important;
-  color: white !important;
-  border-radius: var(--radius-md) !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
-  box-shadow: var(--shadow-azul) !important;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-  background: var(--azul-claro) !important;
-  border-color: var(--azul-claro) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-colorida) !important;
-}
-
-.btn-outline-primary {
-  background: transparent !important;
-  border: 2px solid var(--azul-principal) !important;
-  color: var(--azul-principal) !important;
-  border-radius: var(--radius-md) !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
-}
-
-.btn-outline-primary:hover,
-.btn-outline-primary:focus {
-  background: var(--azul-principal) !important;
-  border-color: var(--azul-principal) !important;
-  color: white !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-azul) !important;
-}
-
-/* Botão RSVP Hero - Super divertido */
+/* Botão RSVP Hero - Destaque máximo */
 .btn-rsvp-hero {
-  background: var(--gradient-azul-diversao);
-  border: 4px solid transparent;
-  background-image: linear-gradient(var(--gradient-azul-diversao), var(--gradient-azul-diversao)), var(--gradient-ceu);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  border-radius: var(--radius-xl);
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: var(--radius-lg);
   padding: 24px 48px;
   font-weight: 800;
   font-family: var(--font-display);
   font-size: 1.4rem;
   color: white;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-colorida), var(--shadow-magica);
+  box-shadow: var(--shadow-glow), var(--shadow-strong);
   position: relative;
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 1px;
-  animation: festa-pulse 2s infinite;
-}
-
-.btn-rsvp-hero::before {
-  content: '🎂';
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.8rem;
-  animation: cake-dance 2s ease-in-out infinite;
-}
-
-.btn-rsvp-hero::after {
-  content: '🎉';
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.8rem;
-  animation: party-dance 2s ease-in-out infinite reverse;
-}
-
-@keyframes festa-pulse {
-  0%, 100% { 
-    box-shadow: var(--shadow-colorida), var(--shadow-magica);
-    transform: scale(1);
-  }
-  50% { 
-    box-shadow: var(--shadow-alegre), 0 0 40px rgba(34, 197, 94, 0.4);
-    transform: scale(1.05);
-  }
-}
-
-@keyframes cake-dance {
-  0%, 100% { transform: translateY(-50%) rotate(0deg); }
-  25% { transform: translateY(-60%) rotate(5deg); }
-  75% { transform: translateY(-40%) rotate(-5deg); }
-}
-
-@keyframes party-dance {
-  0%, 100% { transform: translateY(-50%) scale(1); }
-  50% { transform: translateY(-50%) scale(1.3); }
+  animation: pulse-hero 3s infinite;
 }
 
 .btn-rsvp-hero:hover {
-  transform: translateY(-8px) scale(1.1);
-  box-shadow: 0 0 60px rgba(56, 189, 248, 0.6), var(--shadow-colorida);
-  background-image: linear-gradient(var(--gradient-ceu), var(--gradient-ceu)), var(--gradient-azul-diversao);
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 60px rgba(56, 189, 248, 0.5), var(--shadow-strong);
+  background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%);
   color: white;
-  animation: blue-hover 0.6s ease-in-out infinite;
 }
 
-@keyframes blue-hover {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.1); }
+@keyframes pulse-hero {
+  0%, 100% { 
+    box-shadow: var(--shadow-glow), var(--shadow-strong);
+  }
+  50% { 
+    box-shadow: 0 0 50px rgba(56, 189, 248, 0.5), var(--shadow-strong);
+  }
 }
 
 /* ===== SEÇÕES ===== */
@@ -702,41 +572,21 @@ h1, h2, h3, h4, h5, h6 {
   border-color: rgba(34, 197, 94, 0.5);
 }
 
-/* ===== FORMS MODERNOS (mantendo compatibilidade) ===== */
+/* ===== FORMS MODERNOS ===== */
 .form-control-modern {
   border-radius: var(--radius-md);
-  border: 2px solid rgba(56, 189, 248, 0.3);
+  border: 2px solid rgba(56, 189, 248, 0.2);
   padding: 16px 20px;
   font-family: var(--font-body);
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-azul);
 }
 
 .form-control-modern:focus {
-  border-color: var(--azul-claro);
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+  border-color: var(--ocean-blue);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
   outline: none;
-  transform: translateY(-1px);
-}
-
-/* Form control padrão Bootstrap - compatibilidade */
-.form-control {
-  border-radius: var(--radius-md) !important;
-  border: 2px solid rgba(56, 189, 248, 0.3) !important;
-  padding: 12px 16px !important;
-  font-family: var(--font-body) !important;
-  transition: all 0.3s ease !important;
-  background: rgba(255, 255, 255, 0.95) !important;
-  box-shadow: var(--shadow-azul) !important;
-}
-
-.form-control:focus {
-  border-color: var(--azul-claro) !important;
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15) !important;
-  outline: none !important;
-  transform: translateY(-1px) !important;
 }
 
 /* ===== LOADING E ANIMAÇÕES ===== */
@@ -759,7 +609,7 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: translateY(-20px); }
 }
 
-/* ===== FUNDO DIVERTIDO COM FORMAS FLUTUANTES ===== */
+/* ===== FUNDO CLEAN E MINIMALISTA ===== */
 .clean-background {
   position: fixed;
   top: 0;
@@ -769,61 +619,44 @@ h1, h2, h3, h4, h5, h6 {
   z-index: -10;
   pointer-events: none;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(30, 64, 175, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
-    radial-gradient(circle at 40% 70%, rgba(125, 211, 252, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 60% 30%, rgba(224, 242, 254, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30, 64, 175, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(14, 165, 233, 0.02) 0%, transparent 50%);
 }
 
-/* Elementos decorativos flutuantes */
+/* Ondas sutis no fundo */
 .clean-background::before {
-  content: '🎈 🎁 🎂 ⭐ 🎊 🎉 🌟 🎭';
+  content: '';
   position: absolute;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-  font-size: 2rem;
-  opacity: 0.1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 80%;
-  flex-wrap: wrap;
-  animation: float-elements 20s ease-in-out infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(135deg, transparent 0%, rgba(56, 189, 248, 0.01) 50%, transparent 100%);
+  animation: gentle-wave 20s ease-in-out infinite;
 }
 
 .clean-background::after {
-  content: '💫 🎪 🎨 🎵 🌈 🦄 🎀 ⚡';
+  content: '';
   position: absolute;
-  top: 20%;
-  left: 15%;
-  right: 15%;
-  font-size: 1.5rem;
-  opacity: 0.08;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 60%;
-  flex-wrap: wrap;
-  animation: float-elements 25s ease-in-out infinite reverse;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(-45deg, transparent 0%, rgba(30, 64, 175, 0.01) 50%, transparent 100%);
+  animation: gentle-wave 25s ease-in-out infinite reverse;
 }
 
-@keyframes float-elements {
+@keyframes gentle-wave {
   0%, 100% { 
-    opacity: 0.1;
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% { 
-    opacity: 0.15;
-    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.3;
+    transform: translateY(0px);
   }
   50% { 
-    opacity: 0.12;
-    transform: translateY(-10px) rotate(-3deg);
-  }
-  75% { 
-    opacity: 0.18;
-    transform: translateY(-30px) rotate(8deg);
+    opacity: 0.6;
+    transform: translateY(-10px);
   }
 }
 
@@ -842,13 +675,8 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .btn-rsvp-hero {
-    padding: 20px 40px !important;
+    padding: 20px 32px;
     font-size: 1.2rem;
-  }
-  
-  .btn-rsvp-hero::before,
-  .btn-rsvp-hero::after {
-    font-size: 1.3rem;
   }
   
   .photo-modal-close,
@@ -869,24 +697,5 @@ h1, h2, h3, h4, h5, h6 {
   .photo-modal-counter {
     bottom: 20px;
     padding: 8px 16px;
-  }
-  
-  /* Elementos flutuantes menores em mobile */
-  .clean-background::before,
-  .clean-background::after {
-    font-size: 1.5rem !important;
-  }
-  
-  /* Cards menores em mobile */
-  .modern-card::before {
-    font-size: 1.2rem;
-    top: 8px;
-    right: 12px;
-  }
-  
-  .glass-card::before {
-    font-size: 1rem;
-    top: 12px;
-    right: 12px;
   }
 }

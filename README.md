@@ -42,7 +42,7 @@ yarn start
 Copie `.env.local` e configure:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_API_URL=http://localhost:3010
 ```
 
 ## 📁 Estrutura
@@ -70,7 +70,7 @@ src/
 
 ## 🔗 Integração
 
-Conecta com a API NestJS na porta 4000:
+Conecta com a API NestJS na porta 3010:
 - Carrega aniversários por slug
 - Gerencia presentes e RSVP
 - Sistema de mensagens com moderação
