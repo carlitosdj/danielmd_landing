@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start -p 4001",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "pm2:start": "npx pm2 start yarn --name \"evnt_danielmd\" --interpreter bash -- start",
+    "pm2:restart": "npx pm2 restart evnt_danielmd --update-env"
   },
   "dependencies": {
     "next": "^14.0.0",
