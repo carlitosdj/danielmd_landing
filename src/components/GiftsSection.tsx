@@ -65,7 +65,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
       {/* Presentes disponíveis */}
       {availableGifts.length > 0 && (
         <div className="mb-5">
-          <div className="text-center mb-4">
+          {/* <div className="text-center mb-4">
             <h2 className="text-white mb-3">
               <i className="fas fa-gift me-3"></i>
               Lista de Presentes
@@ -73,7 +73,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
             <p className="text-white-50 fs-5">
               Escolha um presente e ajude a tornar este dia ainda mais especial! 🎁
             </p>
-          </div>
+          </div> */}
 
           <div className="row">
             {availableGifts.map((gift) => (
