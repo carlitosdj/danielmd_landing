@@ -1,0 +1,701 @@
+/* ===== ALL BLUES THEME - DESIGN ELEGANTE E MODERNO ===== */
+
+/* Nova paleta de cores All Blues */
+:root {
+  /* Azuis principais */
+  --midnight-blue: #0f172a;
+  --navy-blue: #1e293b;
+  --royal-blue: #1e40af;
+  --ocean-blue: #0ea5e9;
+  --sky-blue: #38bdf8;
+  --ice-blue: #7dd3fc;
+  --pearl-blue: #e0f2fe;
+  
+  /* Gradientes elegantes */
+  --gradient-primary: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #0ea5e9 100%);
+  --gradient-secondary: linear-gradient(135deg, #1e40af 0%, #38bdf8 50%, #7dd3fc 100%);
+  --gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  --gradient-light: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  
+  /* Sombras elegantes */
+  --shadow-soft: 0 4px 20px rgba(30, 64, 175, 0.1);
+  --shadow-medium: 0 8px 30px rgba(30, 64, 175, 0.15);
+  --shadow-strong: 0 20px 60px rgba(30, 64, 175, 0.25);
+  --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.3);
+  
+  /* Tipografia moderna */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  
+  /* Espaçamentos */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+}
+
+/* Reset e base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--gradient-primary);
+  min-height: 100vh;
+  color: var(--navy-blue);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Container principal */
+.main-container {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== TIPOGRAFIA MODERNA ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+}
+
+/* ===== CARDS MODERNOS ===== */
+.modern-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-accent);
+}
+
+.modern-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+/* Card com glassmorphism azul */
+.glass-card {
+  background: rgba(30, 64, 175, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: var(--shadow-medium);
+  transition: all 0.4s ease;
+}
+
+.glass-card:hover {
+  background: rgba(30, 64, 175, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-4px);
+}
+
+/* ===== BOTÕES PADRÃO (seguindo o padrão "Ver na loja") ===== */
+.btn-primary-standard {
+  background: var(--ocean-blue);
+  border: 2px solid var(--ocean-blue);
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary-standard:hover {
+  background: var(--sky-blue);
+  border-color: var(--sky-blue);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-secondary-standard {
+  background: transparent;
+  border: 2px solid var(--ocean-blue);
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--ocean-blue);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary-standard:hover {
+  background: var(--ocean-blue);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* Botão RSVP Hero - Destaque máximo */
+.btn-rsvp-hero {
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 24px 48px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-glow), var(--shadow-strong);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: pulse-hero 3s infinite;
+}
+
+.btn-rsvp-hero:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 60px rgba(56, 189, 248, 0.5), var(--shadow-strong);
+  background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%);
+  color: white;
+}
+
+@keyframes pulse-hero {
+  0%, 100% { 
+    box-shadow: var(--shadow-glow), var(--shadow-strong);
+  }
+  50% { 
+    box-shadow: 0 0 50px rgba(56, 189, 248, 0.5), var(--shadow-strong);
+  }
+}
+
+/* ===== SEÇÕES ===== */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-hero {
+  padding: 120px 0;
+  text-align: center;
+  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+  position: relative;
+}
+
+.section-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Info cards no hero */
+.info-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.info-card i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* ===== PHOTO GALLERY MODERNA ===== */
+.photo-gallery-section {
+  padding: 100px 0;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.05) 0%, rgba(30, 64, 175, 0.1) 100%);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.photo-gallery-container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.photo-gallery-track {
+  display: flex;
+  animation: scroll-photos 40s linear infinite;
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+}
+
+.photo-item {
+  flex-shrink: 0;
+  margin-right: 30px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.photo-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(56, 189, 248, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.05) translateY(-8px);
+  box-shadow: var(--shadow-strong);
+}
+
+.photo-item:hover::before {
+  opacity: 1;
+}
+
+.photo-thumbnail {
+  width: 280px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  transition: all 0.4s ease;
+}
+
+@keyframes scroll-photos {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+.photo-gallery-container:hover .photo-gallery-track {
+  animation-play-state: paused;
+}
+
+.photo-item {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.photo-item:hover {
+  z-index: 10;
+}
+
+/* ===== MODAL DE FOTO ELEGANTE ===== */
+.photo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.photo-modal-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.photo-modal-close,
+.photo-modal-nav {
+  background: rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.photo-modal-close {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 50px;
+  height: 50px;
+}
+
+.photo-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+}
+
+.photo-modal-close:hover,
+.photo-modal-nav:hover {
+  background: rgba(56, 189, 248, 0.4);
+  border-color: rgba(56, 189, 248, 0.6);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.photo-modal-prev { left: -80px; }
+.photo-modal-next { right: -80px; }
+
+.photo-modal-counter {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* ===== GIFT CARDS ELEGANTES ===== */
+.gift-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  border: 1px solid rgba(30, 64, 175, 0.1);
+}
+
+.gift-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-accent);
+}
+
+.gift-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+}
+
+.gift-card.purchased {
+  opacity: 0.7;
+  position: relative;
+}
+
+.gift-card.purchased::after {
+  content: "ESCOLHIDO ✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  background: var(--gradient-accent);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1.1rem;
+  z-index: 10;
+  box-shadow: var(--shadow-medium);
+}
+
+/* ===== MESSAGE CARDS ELEGANTES ===== */
+.message-card {
+  background: var(--gradient-light);
+  border-radius: var(--radius-lg);
+  color: var(--navy-blue);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.message-card::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-size: 4rem;
+  opacity: 0.2;
+  font-family: serif;
+  color: var(--ocean-blue);
+}
+
+.message-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* ===== PIX SECTION ELEGANTE ===== */
+.pix-section {
+  background: var(--gradient-secondary);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-strong);
+}
+
+.pix-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+}
+
+.pix-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+}
+
+.btn-copy-pix {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.btn-copy-pix:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-copy-pix.copied {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+/* ===== FORMS MODERNOS ===== */
+.form-control-modern {
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(56, 189, 248, 0.2);
+  padding: 16px 20px;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.form-control-modern:focus {
+  border-color: var(--ocean-blue);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+  outline: none;
+}
+
+/* ===== LOADING E ANIMAÇÕES ===== */
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(56, 189, 248, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--ocean-blue);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ===== FUNDO CLEAN E MINIMALISTA ===== */
+.clean-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30, 64, 175, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(14, 165, 233, 0.02) 0%, transparent 50%);
+}
+
+/* Ondas sutis no fundo */
+.clean-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(135deg, transparent 0%, rgba(56, 189, 248, 0.01) 50%, transparent 100%);
+  animation: gentle-wave 20s ease-in-out infinite;
+}
+
+.clean-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(-45deg, transparent 0%, rgba(30, 64, 175, 0.01) 50%, transparent 100%);
+  animation: gentle-wave 25s ease-in-out infinite reverse;
+}
+
+@keyframes gentle-wave {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: translateY(0px);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: translateY(-10px);
+  }
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section-hero {
+    padding: 80px 0;
+  }
+  
+  .btn-rsvp-hero {
+    padding: 20px 32px;
+    font-size: 1.2rem;
+  }
+  
+  .photo-modal-close,
+  .photo-modal-nav {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+  
+  .photo-modal-close {
+    top: 20px;
+    right: 20px;
+  }
+  
+  .photo-modal-prev { left: 20px; }
+  .photo-modal-next { right: 20px; }
+  
+  .photo-modal-counter {
+    bottom: 20px;
+    padding: 8px 16px;
+  }
+}
