@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 interface LocationSectionProps {
   address: string
+  id: string
 }
 
 // Declaração de tipos para Google Maps
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-export default function LocationSection({ address }: LocationSectionProps) {
+export default function LocationSection({ address, id }: LocationSectionProps) {
   const [mapLoaded, setMapLoaded] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -191,7 +192,7 @@ export default function LocationSection({ address }: LocationSectionProps) {
   }
 
   return (
-    <section className="modern-section section-bg-light" style={{ padding: '4rem 0' }}>
+    <section className="modern-section section-bg-light" id={id} style={{ padding: '4rem 0' }}>
       <div style={{ maxWidth: '100%', margin: '0 auto', padding: '0' }}>
         <div className="container-modern">
           <div className="section-header">

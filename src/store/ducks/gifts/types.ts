@@ -50,6 +50,7 @@ export enum GiftsActionTypes {
   // Gift Selection State Actions
   GIFT_BEING_SELECTED_RECEIVED = 'gifts/concurrency/GIFT_BEING_SELECTED_RECEIVED',
   GIFT_SELECTED_RECEIVED = 'gifts/concurrency/GIFT_SELECTED_RECEIVED',
+  GIFT_UPDATED_RECEIVED = 'gifts/concurrency/GIFT_UPDATED_RECEIVED',
   GIFT_SELECTION_RELEASED_RECEIVED = 'gifts/concurrency/GIFT_SELECTION_RELEASED_RECEIVED',
   GIFT_SELECTION_CONFLICT_RECEIVED = 'gifts/concurrency/GIFT_SELECTION_CONFLICT_RECEIVED',
   GIFT_CONFLICT_RECEIVED = 'gifts/concurrency/GIFT_CONFLICT_RECEIVED',
@@ -129,6 +130,11 @@ export interface GiftSelectedReceivedAction {
   payload: { giftId: number; userId: string; userName: string; gift: Gift }
 }
 
+export interface GiftUpdatedReceivedAction {
+  type: GiftsActionTypes.GIFT_UPDATED_RECEIVED
+  payload: { giftId: number; gift: Gift }
+}
+
 export interface GiftSelectionReleasedReceivedAction {
   type: GiftsActionTypes.GIFT_SELECTION_RELEASED_RECEIVED
   payload: { giftId: number; userId: string }
@@ -190,6 +196,7 @@ export type GiftsAction =
   | WebsocketDisconnectAction
   | GiftBeingSelectedReceivedAction
   | GiftSelectedReceivedAction
+  | GiftUpdatedReceivedAction
   | GiftSelectionReleasedReceivedAction
   | GiftSelectionConflictReceivedAction
   | GiftConflictReceivedAction

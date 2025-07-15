@@ -18,6 +18,11 @@ export enum MessagesActionTypes {
   CREATE_MESSAGE_FAILURE = '@messages/CREATE_MESSAGE_FAILURE',
 
   CLEAR_MESSAGES = '@messages/CLEAR_MESSAGES',
+
+  // WebSocket real-time events
+  MESSAGE_CREATED_RECEIVED = '@messages/MESSAGE_CREATED_RECEIVED',
+  MESSAGE_UPDATED_RECEIVED = '@messages/MESSAGE_UPDATED_RECEIVED',
+  MESSAGE_DELETED_RECEIVED = '@messages/MESSAGE_DELETED_RECEIVED',
 }
 
 export interface LoadMessagesRequestAction {
@@ -59,6 +64,22 @@ export interface ClearMessagesAction {
   type: MessagesActionTypes.CLEAR_MESSAGES
 }
 
+// WebSocket actions
+export interface MessageCreatedReceivedAction {
+  type: MessagesActionTypes.MESSAGE_CREATED_RECEIVED
+  payload: { message: Message }
+}
+
+export interface MessageUpdatedReceivedAction {
+  type: MessagesActionTypes.MESSAGE_UPDATED_RECEIVED
+  payload: { messageId: number; message: Message }
+}
+
+export interface MessageDeletedReceivedAction {
+  type: MessagesActionTypes.MESSAGE_DELETED_RECEIVED
+  payload: { messageId: number }
+}
+
 export type MessagesAction =
   | LoadMessagesRequestAction
   | LoadMessagesSuccessAction
@@ -67,3 +88,6 @@ export type MessagesAction =
   | CreateMessageSuccessAction
   | CreateMessageFailureAction
   | ClearMessagesAction
+  | MessageCreatedReceivedAction
+  | MessageUpdatedReceivedAction
+  | MessageDeletedReceivedAction

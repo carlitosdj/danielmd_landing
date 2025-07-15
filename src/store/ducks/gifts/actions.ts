@@ -43,6 +43,9 @@ export const giftBeingSelectedReceived = (giftId: number, userId: string, userNa
 export const giftSelectedReceived = (giftId: number, userId: string, userName: string, gift: Gift) =>
   action(GiftsActionTypes.GIFT_SELECTED_RECEIVED, { giftId, userId, userName, gift })
 
+export const giftUpdatedReceived = (giftId: number, gift: Gift) =>
+  action(GiftsActionTypes.GIFT_UPDATED_RECEIVED, { giftId, gift })
+
 export const giftSelectionReleasedReceived = (giftId: number, userId: string) =>
   action(GiftsActionTypes.GIFT_SELECTION_RELEASED_RECEIVED, { giftId, userId })
 

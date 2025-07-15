@@ -152,6 +152,28 @@ const reducer: Reducer<GiftsState> = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case GiftsActionTypes.GIFT_UPDATED_RECEIVED: {
+      const { giftId, gift } = action.payload;
+      
+      return {
+        ...state,
+        // Update gift in items
+        items: state.items.map(item =>
+          item.id === giftId ? { ...item, ...gift } : item
+        ),
+        // Update gift version
+        giftVersions: {
+          ...state.giftVersions,
+          [giftId]: gift.version || 1,
+        },
+        // Clear any conflict messages for this gift
+        conflictMessages: {
+          ...state.conflictMessages,
+          [giftId]: undefined,
+        },
+      };
+    }
+
     case GiftsActionTypes.GIFT_SELECTION_RELEASED_RECEIVED: {
       const { giftId, userId } = action.payload;
       

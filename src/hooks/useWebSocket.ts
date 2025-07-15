@@ -52,6 +52,15 @@ export const useWebSocket = (slug: string) => {
         dispatch(giftSelectedReceived(event.giftId, event.userId, event.userName, event.gift));
       });
 
+      websocketService.onGiftUpdated((event) => {
+        console.log('WebSocket onGiftUpdated received:', event);
+        // Use loadGiftsSuccess como fallback para atualizar o gift
+        dispatch({
+          type: 'gifts/concurrency/GIFT_UPDATED_RECEIVED',
+          payload: { giftId: event.giftId, gift: event.gift }
+        });
+      });
+
       websocketService.onGiftSelectionReleased((event) => {
         dispatch(giftSelectionReleasedReceived(event.giftId, event.userId));
       });

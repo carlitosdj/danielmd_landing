@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'next/navigation'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import { useMessagesWebSocket } from '../../hooks/useMessagesWebSocket'
 import { loadAnniversaryBySlugRequest } from '../../store/ducks/anniversary/actions'
 import { loadGiftsRequest } from '../../store/ducks/gifts/actions'
 import { loadMessagesRequest } from '../../store/ducks/messages/actions'
@@ -24,6 +25,9 @@ export default function AnniversaryPageNew() {
   const { items: gifts, loading: giftsLoading } = useTypedSelector(state => state.gifts)
   const { items: messages, loading: messagesLoading } = useTypedSelector(state => state.messages)
   const { submitted: rsvpSubmitted } = useTypedSelector(state => state.rsvp)
+
+  // Initialize WebSocket for messages real-time updates
+  const { connected: messagesWebSocketConnected } = useMessagesWebSocket(anniversary?.id)
 
   useEffect(() => {
     if (slug) {
@@ -300,6 +304,24 @@ export default function AnniversaryPageNew() {
               >
                 {rsvpSubmitted ? '✅ Presença Confirmada!' : '🎉 Confirmar Presença'}
               </button>
+              
+              {/* Botões secundários */}
+              <div className="hero-secondary-actions">
+                <a 
+                  className="hero-secondary-btn"
+                  href='#gifts-section'
+                >
+                  <i className="fas fa-gift me-2"></i>
+                  Presentes
+                </a>
+                <a 
+                  className="hero-secondary-btn"
+                  href='#location-section'
+                >
+                  <i className="fas fa-map-marker-alt me-2"></i>
+                  Como chegar
+                </a>
+              </div>
 
               {/* Cards de informação */}
               <div className="hero-info-cards">
@@ -451,7 +473,7 @@ export default function AnniversaryPageNew() {
         </section>
 
         {/* Como Chegar */}
-        <LocationSection address={anniversary.address} />
+        <LocationSection address={anniversary.address} id="location-section" />
 
         {/* Footer */}
         <footer className="footer-section">

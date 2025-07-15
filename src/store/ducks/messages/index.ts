@@ -58,6 +58,27 @@ const reducer: Reducer<MessagesState> = (state = INITIAL_STATE, action) => {
     case MessagesActionTypes.CLEAR_MESSAGES:
       return INITIAL_STATE
 
+    // WebSocket events
+    case MessagesActionTypes.MESSAGE_CREATED_RECEIVED:
+      return {
+        ...state,
+        items: [...state.items, action.payload.message],
+      }
+
+    case MessagesActionTypes.MESSAGE_UPDATED_RECEIVED:
+      return {
+        ...state,
+        items: state.items.map(message =>
+          message.id === action.payload.messageId ? action.payload.message : message
+        ),
+      }
+
+    case MessagesActionTypes.MESSAGE_DELETED_RECEIVED:
+      return {
+        ...state,
+        items: state.items.filter(message => message.id !== action.payload.messageId),
+      }
+
     default:
       return state
   }

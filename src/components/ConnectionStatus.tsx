@@ -34,7 +34,7 @@ export default function ConnectionStatus({ showOnline = false, className = '' }:
       <div className="connection-indicator">
         <div className="connection-dot"></div>
         <span className="connection-text">
-          {websocketConnected ? 'Conectado' : 'Desconectado'}
+          {websocketConnected && showStatus ? 'Conectado' : 'Desconectado'}
         </span>
       </div>
       
