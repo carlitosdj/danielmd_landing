@@ -198,7 +198,7 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
     <section
       className="modern-section section-bg-light"
       id={id}
-      style={{ padding: "4rem 0" }}
+      style={{ padding: "4rem 0 0 0" }}
     >
       <div style={{ maxWidth: "100%", margin: "0 auto", padding: "0" }}>
         <div className="container-modern">
@@ -361,7 +361,9 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
           width: "100%",
           height: "400px",
           position: "relative",
-          marginBottom: "2rem",
+          marginTop: "2rem",
+          //marginBottom: "2rem",
+          //backgroundColor: "var(--primary-purple)",
         }}
       >
         {!mapLoaded && !error ? (
