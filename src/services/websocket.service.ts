@@ -64,8 +64,10 @@ class WebSocketService {
 
     this.disconnect(); // Desconectar se já estiver conectado
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3010';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
     const socketUrl = `${apiUrl}/gifts`;
+
+    console.log('Conectando WebSocket para:', socketUrl);
 
     this.socket = io(socketUrl, {
       transports: ['websocket', 'polling'],
@@ -75,7 +77,7 @@ class WebSocketService {
     });
 
     this.currentSlug = slug;
-    this.setupEventListeners();
+    this.setupEventListeners(socketUrl);
     this.joinAnniversary(slug);
   }
 
@@ -90,14 +92,14 @@ class WebSocketService {
     this.onConnectionChangeCallback?.(false);
   }
 
-  private setupEventListeners(): void {
+  private setupEventListeners(socketUrl: string): void {
     if (!this.socket) return;
 
     this.socket.on('connect', () => {
       this.isConnected = true;
       this.reconnectAttempts = 0;
       this.onConnectionChangeCallback?.(true);
-      console.log('WebSocket conectado');
+      console.log('WebSocket conectado para:', socketUrl);
       
       // Rejoin anniversary se necessário
       if (this.currentSlug) {
@@ -119,30 +121,37 @@ class WebSocketService {
 
     // Eventos de presentes
     this.socket.on('gift-being-selected', (event: GiftBeingSelectedEvent) => {
+      console.log('WebSocket: gift-being-selected', event);
       this.onGiftBeingSelectedCallback?.(event);
     });
 
     this.socket.on('gift-selected', (event: GiftSelectedEvent) => {
+      console.log('WebSocket: gift-selected', event);
       this.onGiftSelectedCallback?.(event);
     });
 
     this.socket.on('gift-updated', (event: GiftUpdatedEvent) => {
+      console.log('WebSocket: gift-updated', event);
       this.onGiftUpdatedCallback?.(event);
     });
 
     this.socket.on('gift-conflict', (event: GiftConflictEvent) => {
+      console.log('WebSocket: gift-conflict', event);
       this.onGiftConflictCallback?.(event);
     });
 
     this.socket.on('gift-selection-released', (event: GiftSelectionReleasedEvent) => {
+      console.log('WebSocket: gift-selection-released', event);
       this.onGiftSelectionReleasedCallback?.(event);
     });
 
     this.socket.on('gift-selection-conflict', (event: GiftSelectionConflictEvent) => {
+      console.log('WebSocket: gift-selection-conflict', event);
       this.onGiftSelectionConflictCallback?.(event);
     });
 
     this.socket.on('current-selections', (events: CurrentSelectionsEvent[]) => {
+      console.log('WebSocket: current-selections', events);
       this.onCurrentSelectionsCallback?.(events);
     });
   }
@@ -155,20 +164,26 @@ class WebSocketService {
 
   // Métodos para emitir eventos
   notifyGiftBeingSelected(giftId: number, userId: string, userName?: string): void {
+    console.log('Enviando gift-being-selected:', { giftId, userId, userName });
     if (this.socket && this.isConnected) {
       this.socket.emit('gift-being-selected', {
         giftId,
         userId,
         userName,
       });
+    } else {
+      console.warn('WebSocket não conectado, não foi possível enviar gift-being-selected');
     }
   }
 
   notifyGiftSelectionCancelled(giftId: number): void {
+    console.log('Enviando gift-selection-cancelled:', { giftId });
     if (this.socket && this.isConnected) {
       this.socket.emit('gift-selection-cancelled', {
         giftId,
       });
+    } else {
+      console.warn('WebSocket não conectado, não foi possível enviar gift-selection-cancelled');
     }
   }
 

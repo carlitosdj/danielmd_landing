@@ -10,7 +10,7 @@ import { loadMessagesRequest } from '../../store/ducks/messages/actions'
 import GiftsSection from '../../components/GiftsSection'
 import RsvpSectionNew from '../../components/RsvpSectionNew'
 import MessagesSection from '../../components/MessagesSection'
-import PhotoGalleryNew from '../../components/PhotoGalleryNew'
+// import PhotoGalleryNew from '../../components/PhotoGalleryNew'
 import PhotoGallery from '@/components/PhotoGallery'
 import LocationSection from '../../components/LocationSection'
 import ConnectionStatus from '../../components/ConnectionStatus'
@@ -162,8 +162,8 @@ export default function AnniversaryPageNew() {
           backdropFilter: 'blur(20px)',
           border: '3px solid transparent',
           backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), var(--gradient-azul-diversao)',
-          backgroundOrigin: 'border-box',
-          backgroundClip: 'content-box, border-box'
+          // backgroundOrigin: 'border-box',
+          // backgroundClip: 'content-box, border-box'
         }}>
           {/* Emoji de erro */}
           <div style={{
@@ -337,7 +337,8 @@ export default function AnniversaryPageNew() {
             <div className="section-header">
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📸</div>
               <h2 className="section-title">Uau, como passou rápido.</h2>
-              <p className="section-subtitle">Vamos relembrar os momentos dessa jornada incrível! 💖</p>
+              {/* <p className="section-subtitle">Vamos relembrar os momentos dessa jornada incrível! 💖</p> */}
+              <p className="section-subtitle">Veja como eu desenvolvi até aqui! 💖</p>
             </div>
           </div>
           <PhotoGallery slug={slug} />

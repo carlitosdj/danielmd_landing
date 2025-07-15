@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { GiftsState, GiftsAction, GiftsActionTypes } from './types'
+import { GiftsState, GiftsActionTypes } from './types'
 import { Gift } from '../../../lib/types'
 
 const INITIAL_STATE: GiftsState = {
