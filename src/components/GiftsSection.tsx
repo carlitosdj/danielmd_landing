@@ -78,9 +78,11 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
   // Auto-close modal when gift is selected by another user
   useEffect(() => {
     if (selectedGift && showModal) {
+      const giftInState = gifts.find(g => g.id === selectedGift.id)
+
       // Check if gift was selected by another user
-      if (selectedGift.status === 'comprado') {
-        alert(`Este presente já foi escolhido por ${selectedGift.boughtBy || 'outro usuário'}.`)
+      if (giftInState && giftInState.status === 'comprado') {
+        alert(`Este presente já foi escolhido por ${giftInState.boughtBy || 'outro usuário'}.`)
         handleCancelSelection()
         return
       }
