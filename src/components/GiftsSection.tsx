@@ -32,43 +32,15 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
   
   const { notifyGiftBeingSelected, notifyGiftSelectionCancelled } = useWebSocket(slug)
 
-  // Helper functions for concurrency state
-  const isGiftBeingSelected = useCallback((giftId: number) => {
-    return activeSelections.some(selection => selection.giftId === giftId)
-  }, [activeSelections])
-
-  const isGiftSelectedByMe = useCallback((giftId: number) => {
-    return activeSelections.some(selection => 
-      selection.giftId === giftId && selection.userId === userId
-    )
-  }, [activeSelections, userId])
-
-  const getGiftSelector = useCallback((giftId: number) => {
-    return activeSelections.find(selection => selection.giftId === giftId)
-  }, [activeSelections])
-
   const hasGiftConflict = useCallback((giftId: number) => {
     return conflictMessages[giftId] !== undefined
   }, [conflictMessages])
 
   const handleMarkAsBought = (gift: Gift) => {
-    // Check if gift is already being selected by someone else
-    if (isGiftBeingSelected(gift.id) && !isGiftSelectedByMe(gift.id)) {
-      const selector = getGiftSelector(gift.id)
-      alert(`Este presente já está sendo selecionado por ${selector?.userName || 'outro usuário'}.`)
-      return
-    }
-
     // Clear any existing conflict message
     if (hasGiftConflict(gift.id)) {
       dispatch(clearGiftConflictMessage(gift.id))
     }
-
-    // Notify WebSocket about selection
-    notifyGiftBeingSelected(gift.id, buyerName)
-    
-    // Start local selection
-    dispatch(startGiftSelection(gift.id, userId || '', buyerName))
 
     setSelectedGift(gift)
     setShowModal(true)
@@ -77,6 +49,12 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
   const handleConfirmPurchase = () => {
     if (selectedGift && buyerName.trim() && userId) {
       const giftVersion = giftVersions[selectedGift.id] || 1
+      
+      // Notify WebSocket about selection when user confirms
+      notifyGiftBeingSelected(selectedGift.id, buyerName)
+      
+      // Start local selection
+      dispatch(startGiftSelection(selectedGift.id, userId, buyerName))
       
       dispatch(markGiftBoughtRequest(
         selectedGift.id, 
@@ -92,14 +70,6 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
   }
 
   const handleCancelSelection = () => {
-    if (selectedGift) {
-      // Notify WebSocket about cancellation
-      notifyGiftSelectionCancelled(selectedGift.id)
-      
-      // Cancel local selection
-      dispatch(cancelGiftSelection(selectedGift.id))
-    }
-    
     setShowModal(false)
     setSelectedGift(null)
     setBuyerName('')
@@ -115,23 +85,15 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
         return
       }
 
-      // Check if gift is being selected by another user
-      if (isGiftBeingSelected(selectedGift.id) && !isGiftSelectedByMe(selectedGift.id)) {
-        const selector = getGiftSelector(selectedGift.id)
-        alert(`Este presente agora está sendo selecionado por ${selector?.userName || 'outro usuário'}.`)
-        handleCancelSelection()
-        return
-      }
-
       // Check for conflict messages
       if (hasGiftConflict(selectedGift.id)) {
         const conflict = conflictMessages[selectedGift.id]
-        alert(conflict.message)
+        alert(conflict?.message || 'Conflito detectado')
         handleCancelSelection()
         return
       }
     }
-  }, [selectedGift, showModal, gifts, isGiftBeingSelected, isGiftSelectedByMe, getGiftSelector, hasGiftConflict, conflictMessages])
+  }, [selectedGift, showModal, gifts, hasGiftConflict, conflictMessages])
 
   const availableGifts = gifts.filter(gift => gift.status === 'disponivel')
   const purchasedGifts = gifts.filter(gift => gift.status === 'comprado')
@@ -205,45 +167,13 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                         </a>
                       )}
                       
-                      {(() => {
-                        const beingSelected = isGiftBeingSelected(gift.id)
-                        const selectedByMe = isGiftSelectedByMe(gift.id)
-                        const selector = getGiftSelector(gift.id)
-                        
-                        if (beingSelected && !selectedByMe) {
-                          return (
-                            <button 
-                              className="btn btn-warning"
-                              disabled
-                            >
-                              <i className="fas fa-clock me-2"></i>
-                              Sendo selecionado por {selector?.userName || 'outro usuário'}...
-                            </button>
-                          )
-                        }
-                        
-                        if (beingSelected && selectedByMe) {
-                          return (
-                            <button 
-                              className="btn btn-info"
-                              disabled
-                            >
-                              <i className="fas fa-hand-paper me-2"></i>
-                              Você está selecionando...
-                            </button>
-                          )
-                        }
-                        
-                        return (
-                          <button 
-                            className="btn btn-primary"
-                            onClick={() => handleMarkAsBought(gift)}
-                          >
-                            <i className="fas fa-heart me-2"></i>
-                            Vou dar este! 💝
-                          </button>
-                        )
-                      })()}
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => handleMarkAsBought(gift)}
+                      >
+                        <i className="fas fa-heart me-2"></i>
+                        Vou dar este! 💝
+                      </button>
                     </div>
                   </div>
                 </div>
