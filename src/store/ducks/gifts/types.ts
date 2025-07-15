@@ -51,6 +51,8 @@ export enum GiftsActionTypes {
   GIFT_BEING_SELECTED_RECEIVED = 'gifts/concurrency/GIFT_BEING_SELECTED_RECEIVED',
   GIFT_SELECTED_RECEIVED = 'gifts/concurrency/GIFT_SELECTED_RECEIVED',
   GIFT_UPDATED_RECEIVED = 'gifts/concurrency/GIFT_UPDATED_RECEIVED',
+  GIFT_CREATED_RECEIVED = 'gifts/concurrency/GIFT_CREATED_RECEIVED',
+  GIFT_DELETED_RECEIVED = 'gifts/concurrency/GIFT_DELETED_RECEIVED',
   GIFT_SELECTION_RELEASED_RECEIVED = 'gifts/concurrency/GIFT_SELECTION_RELEASED_RECEIVED',
   GIFT_SELECTION_CONFLICT_RECEIVED = 'gifts/concurrency/GIFT_SELECTION_CONFLICT_RECEIVED',
   GIFT_CONFLICT_RECEIVED = 'gifts/concurrency/GIFT_CONFLICT_RECEIVED',
@@ -135,6 +137,16 @@ export interface GiftUpdatedReceivedAction {
   payload: { giftId: number; gift: Gift }
 }
 
+export interface GiftCreatedReceivedAction {
+  type: GiftsActionTypes.GIFT_CREATED_RECEIVED
+  payload: { gift: Gift }
+}
+
+export interface GiftDeletedReceivedAction {
+  type: GiftsActionTypes.GIFT_DELETED_RECEIVED
+  payload: { giftId: number; anniversaryId: number }
+}
+
 export interface GiftSelectionReleasedReceivedAction {
   type: GiftsActionTypes.GIFT_SELECTION_RELEASED_RECEIVED
   payload: { giftId: number; userId: string }
@@ -197,6 +209,8 @@ export type GiftsAction =
   | GiftBeingSelectedReceivedAction
   | GiftSelectedReceivedAction
   | GiftUpdatedReceivedAction
+  | GiftCreatedReceivedAction
+  | GiftDeletedReceivedAction
   | GiftSelectionReleasedReceivedAction
   | GiftSelectionConflictReceivedAction
   | GiftConflictReceivedAction

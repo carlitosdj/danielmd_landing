@@ -27,7 +27,7 @@ export default function AnniversaryPageNew() {
   const { submitted: rsvpSubmitted } = useTypedSelector(state => state.rsvp)
 
   // Initialize WebSocket for messages real-time updates
-  const { connected: messagesWebSocketConnected } = useMessagesWebSocket(anniversary?.id)
+  useMessagesWebSocket(anniversary?.id)
 
   useEffect(() => {
     if (slug) {

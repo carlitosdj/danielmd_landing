@@ -61,6 +61,24 @@ export const useWebSocket = (slug: string) => {
         });
       });
 
+      websocketService.onGiftCreated((event) => {
+        console.log('WebSocket onGiftCreated received:', event);
+        // Reload gifts to show the new gift
+        dispatch({
+          type: 'gifts/concurrency/GIFT_CREATED_RECEIVED',
+          payload: { gift: event.gift }
+        });
+      });
+
+      websocketService.onGiftDeleted((event) => {
+        console.log('WebSocket onGiftDeleted received:', event);
+        // Remove gift from the list
+        dispatch({
+          type: 'gifts/concurrency/GIFT_DELETED_RECEIVED',
+          payload: { giftId: event.giftId, anniversaryId: event.anniversaryId }
+        });
+      });
+
       websocketService.onGiftSelectionReleased((event) => {
         dispatch(giftSelectionReleasedReceived(event.giftId, event.userId));
       });

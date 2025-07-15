@@ -174,6 +174,48 @@ const reducer: Reducer<GiftsState> = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case GiftsActionTypes.GIFT_CREATED_RECEIVED: {
+      const { gift } = action.payload;
+      
+      // Evitar duplicação: só adiciona se o presente não existir
+      const giftExists = state.items.some(item => item.id === gift.id);
+      
+      return {
+        ...state,
+        // Add new gift to items only if it doesn't exist
+        items: giftExists ? state.items : [...state.items, gift],
+        // Set gift version
+        giftVersions: {
+          ...state.giftVersions,
+          [gift.id]: gift.version || 1,
+        },
+      };
+    }
+
+    case GiftsActionTypes.GIFT_DELETED_RECEIVED: {
+      const { giftId } = action.payload;
+      
+      return {
+        ...state,
+        // Remove gift from items
+        items: state.items.filter(item => item.id !== giftId),
+        // Remove gift version
+        giftVersions: {
+          ...state.giftVersions,
+          [giftId]: undefined,
+        },
+        // Remove any conflict messages for this gift
+        conflictMessages: {
+          ...state.conflictMessages,
+          [giftId]: undefined,
+        },
+        // Remove any active selections for this gift
+        activeSelections: state.activeSelections.filter(
+          selection => selection.giftId !== giftId
+        ),
+      };
+    }
+
     case GiftsActionTypes.GIFT_SELECTION_RELEASED_RECEIVED: {
       const { giftId, userId } = action.payload;
       

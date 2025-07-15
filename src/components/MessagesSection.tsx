@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { Message } from '../lib/types'
 import useTypedSelector from '../hooks/useTypedSelector'
@@ -17,15 +17,38 @@ export default function MessagesSection({ messages, loading, slug }: MessagesSec
   const { submitting, submitError } = useTypedSelector(state => state.messages)
   
   const [showForm, setShowForm] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [formData, setFormData] = useState({
     guestName: '',
     guestEmail: '',
     message: ''
   })
+  const [submittedGuestName, setSubmittedGuestName] = useState('')
+  const wasSubmittingRef = useRef(false)
+
+  // Detectar quando a mensagem foi enviada com sucesso
+  useEffect(() => {
+    if (wasSubmittingRef.current && !submitting && !submitError) {
+      // Mensagem foi enviada com sucesso!
+      setShowSuccessModal(true)
+      setShowForm(false)
+      
+      // Fechar modal automaticamente após 6 segundos
+      const timer = setTimeout(() => {
+        setShowSuccessModal(false)
+      }, 6000)
+      
+      return () => clearTimeout(timer)
+    }
+    wasSubmittingRef.current = submitting
+  }, [submitting, submitError])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (formData.guestName.trim() && formData.message.trim()) {
+      // Salvar o nome para a modal de sucesso
+      setSubmittedGuestName(formData.guestName.trim())
+      
       dispatch(createMessageRequest(
         slug,
         formData.guestName.trim(),
@@ -35,7 +58,6 @@ export default function MessagesSection({ messages, loading, slug }: MessagesSec
       
       // Limpar formulário após envio
       setFormData({ guestName: '', guestEmail: '', message: '' })
-      setShowForm(false)
     }
   }
 
@@ -212,6 +234,99 @@ export default function MessagesSection({ messages, loading, slug }: MessagesSec
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Sucesso Divertida */}
+      {showSuccessModal && (
+        <div 
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1050 }}
+        >
+          <div className="modern-card text-center success-modal-content" style={{ maxWidth: '500px', width: '90%' }}>
+            <div className="p-5">
+              {/* Animação de confete */}
+              <div className="mb-4 position-relative">
+                <div className="display-1 mb-3 wiggle-emoji">🎉</div>
+                <div className="position-absolute top-0 start-0 w-100">
+                  <span className="fs-2 confetti-emoji">✨</span>
+                  <span className="fs-3 ms-3 confetti-emoji">🎊</span>
+                  <span className="fs-2 ms-2 confetti-emoji">💕</span>
+                  <span className="fs-3 ms-3 confetti-emoji">🌟</span>
+                  <span className="fs-2 ms-2 confetti-emoji">🎈</span>
+                </div>
+              </div>
+
+              <h3 className="text-primary mb-3 fw-bold">
+                Uhuuul! 🥳
+              </h3>
+              
+              <h4 className="mb-4">
+                Obrigado, {submittedGuestName}! 
+              </h4>
+
+              <div className="alert alert-success border-0 mb-4" style={{ backgroundColor: '#d4edda' }}>
+                <div className="d-flex align-items-center justify-content-center">
+                  <i className="fas fa-heart text-danger me-3 fa-2x heart-pulse"></i>
+                  <div>
+                    <strong>Sua mensagem foi registrada com sucesso!</strong>
+                    <br />
+                    <small>Em breve ela aparecerá aqui para todos verem! 💌</small>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-muted mb-3">
+                  <i className="fas fa-magic me-2"></i>
+                  Sua mensagem está passando por nossa moderação carinhosa...
+                </p>
+                <div className="d-flex justify-content-center align-items-center gap-2 mb-3">
+                  <span className="badge bg-primary">📝 Escrita</span>
+                  <i className="fas fa-arrow-right text-muted"></i>
+                  <span className="badge bg-warning">⏳ Moderação</span>
+                  <i className="fas fa-arrow-right text-muted"></i>
+                  <span className="badge bg-success">✨ Publicada</span>
+                </div>
+              </div>
+
+              <div className="row text-center mb-4">
+                <div className="col-4">
+                  <div className="fs-2 mb-2">🙏</div>
+                  <small className="text-muted">Gratidão</small>
+                </div>
+                <div className="col-4">
+                  <div className="fs-2 mb-2">💝</div>
+                  <small className="text-muted">Carinho</small>
+                </div>
+                <div className="col-4">
+                  <div className="fs-2 mb-2">🎂</div>
+                  <small className="text-muted">Festa</small>
+                </div>
+              </div>
+
+              <button 
+                className="btn btn-primary btn-lg px-5"
+                onClick={() => setShowSuccessModal(false)}
+              >
+                <i className="fas fa-thumbs-up me-2"></i>
+                Perfeito! 🎉
+              </button>
+
+              <div className="mt-3">
+                <small className="text-muted">
+                  <i className="fas fa-info-circle me-2"></i>
+                  Que tal ver os outros presentes também? 🎁
+                </small>
+              </div>
+
+              <div className="mt-2">
+                <small className="text-muted opacity-75">
+                  Esta janela se fecha automaticamente em alguns segundos...
+                </small>
+              </div>
             </div>
           </div>
         </div>

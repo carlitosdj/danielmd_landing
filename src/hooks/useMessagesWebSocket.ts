@@ -37,7 +37,7 @@ export const useMessagesWebSocket = (anniversaryId?: number) => {
 
     socketRef.current = messagesSocket;
 
-    // Messages WebSocket events
+    // Messages WebSocket events - fixed
     messagesSocket.on('connect', () => {
       console.log('Landing WebSocket connected to messages');
       isConnectedRef.current = true;

@@ -9,6 +9,7 @@ const INITIAL_STATE: MessagesState = {
   submitError: null,
 }
 
+
 const reducer: Reducer<MessagesState> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case MessagesActionTypes.LOAD_MESSAGES_REQUEST:
@@ -37,7 +38,7 @@ const reducer: Reducer<MessagesState> = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         submitting: false,
-        items: [...state.items, action.payload.data],
+        //items: [...state.items, action.payload.data], //deixa somente a MESSAGE_CREATED_RECEIVED atuar aqui
         submitError: null,
       }
 
@@ -58,11 +59,22 @@ const reducer: Reducer<MessagesState> = (state = INITIAL_STATE, action) => {
     case MessagesActionTypes.CLEAR_MESSAGES:
       return INITIAL_STATE
 
-    // WebSocket events
+    // WebSocket events - Apenas para mensagens criadas por outros usuários ou admin
     case MessagesActionTypes.MESSAGE_CREATED_RECEIVED:
+      const newMessage = action.payload.message;
+      
+      // Verificar se a mensagem já existe (evitar duplicação de mensagens criadas localmente)
+      const messageExists = state.items.some(item => item.id === newMessage.id);
+      
+      if (messageExists) {
+        // Mensagem já existe (provavelmente criada localmente), não adicionar novamente
+        return state;
+      }
+      
+      // Mensagem nova (provavelmente criada externamente), adicionar à lista
       return {
         ...state,
-        items: [...state.items, action.payload.message],
+        items: [...state.items, newMessage],
       }
 
     case MessagesActionTypes.MESSAGE_UPDATED_RECEIVED:

@@ -39,6 +39,15 @@ export interface CurrentSelectionsEvent {
   userId: string;
 }
 
+export interface GiftCreatedEvent {
+  gift: any;
+}
+
+export interface GiftDeletedEvent {
+  giftId: number;
+  anniversaryId: number;
+}
+
 class WebSocketService {
   private socket: Socket | null = null;
   private isConnected = false;
@@ -51,6 +60,8 @@ class WebSocketService {
   private onGiftBeingSelectedCallback?: (event: GiftBeingSelectedEvent) => void;
   private onGiftSelectedCallback?: (event: GiftSelectedEvent) => void;
   private onGiftUpdatedCallback?: (event: GiftUpdatedEvent) => void;
+  private onGiftCreatedCallback?: (event: GiftCreatedEvent) => void;
+  private onGiftDeletedCallback?: (event: GiftDeletedEvent) => void;
   private onGiftConflictCallback?: (event: GiftConflictEvent) => void;
   private onGiftSelectionReleasedCallback?: (event: GiftSelectionReleasedEvent) => void;
   private onGiftSelectionConflictCallback?: (event: GiftSelectionConflictEvent) => void;
@@ -135,6 +146,16 @@ class WebSocketService {
       this.onGiftUpdatedCallback?.(event);
     });
 
+    this.socket.on('gift-created', (event: GiftCreatedEvent) => {
+      console.log('WebSocket: gift-created', event);
+      this.onGiftCreatedCallback?.(event);
+    });
+
+    this.socket.on('gift-deleted', (event: GiftDeletedEvent) => {
+      console.log('WebSocket: gift-deleted', event);
+      this.onGiftDeletedCallback?.(event);
+    });
+
     this.socket.on('gift-conflict', (event: GiftConflictEvent) => {
       console.log('WebSocket: gift-conflict', event);
       this.onGiftConflictCallback?.(event);
@@ -198,6 +219,14 @@ class WebSocketService {
 
   onGiftUpdated(callback: (event: GiftUpdatedEvent) => void): void {
     this.onGiftUpdatedCallback = callback;
+  }
+
+  onGiftCreated(callback: (event: GiftCreatedEvent) => void): void {
+    this.onGiftCreatedCallback = callback;
+  }
+
+  onGiftDeleted(callback: (event: GiftDeletedEvent) => void): void {
+    this.onGiftDeletedCallback = callback;
   }
 
   onGiftConflict(callback: (event: GiftConflictEvent) => void): void {
