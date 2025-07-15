@@ -13,6 +13,7 @@ import MessagesSection from '../../components/MessagesSection'
 import PhotoGalleryNew from '../../components/PhotoGalleryNew'
 import PhotoGallery from '@/components/PhotoGallery'
 import LocationSection from '../../components/LocationSection'
+import ConnectionStatus from '../../components/ConnectionStatus'
 
 export default function AnniversaryPageNew() {
   const dispatch = useDispatch()
@@ -476,6 +477,9 @@ export default function AnniversaryPageNew() {
           </div>
         </footer>
       </div>
+      
+      {/* Connection Status Indicator */}
+      <ConnectionStatus />
     </>
   )
 }

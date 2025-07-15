@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { Gift } from '../lib/types'
 import { markGiftBoughtRequest } from '../store/ducks/gifts/actions'
+import { startGiftSelection, cancelGiftSelection, clearGiftConflictMessage } from '../store/ducks/gifts/actions'
+import useTypedSelector from '../hooks/useTypedSelector'
+import { useWebSocket } from '../hooks/useWebSocket'
 
 interface GiftsSectionProps {
   gifts: Gift[]
@@ -18,19 +21,117 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
   const [showModal, setShowModal] = useState(false)
   const [pixCopied, setPixCopied] = useState(false)
 
+  // WebSocket and concurrency state
+  const { 
+    websocketConnected, 
+    activeSelections, 
+    conflictMessages, 
+    giftVersions, 
+    userId 
+  } = useTypedSelector(state => state.gifts)
+  
+  const { notifyGiftBeingSelected, notifyGiftSelectionCancelled } = useWebSocket(slug)
+
+  // Helper functions for concurrency state
+  const isGiftBeingSelected = useCallback((giftId: number) => {
+    return activeSelections.some(selection => selection.giftId === giftId)
+  }, [activeSelections])
+
+  const isGiftSelectedByMe = useCallback((giftId: number) => {
+    return activeSelections.some(selection => 
+      selection.giftId === giftId && selection.userId === userId
+    )
+  }, [activeSelections, userId])
+
+  const getGiftSelector = useCallback((giftId: number) => {
+    return activeSelections.find(selection => selection.giftId === giftId)
+  }, [activeSelections])
+
+  const hasGiftConflict = useCallback((giftId: number) => {
+    return conflictMessages[giftId] !== undefined
+  }, [conflictMessages])
+
   const handleMarkAsBought = (gift: Gift) => {
+    // Check if gift is already being selected by someone else
+    if (isGiftBeingSelected(gift.id) && !isGiftSelectedByMe(gift.id)) {
+      const selector = getGiftSelector(gift.id)
+      alert(`Este presente já está sendo selecionado por ${selector?.userName || 'outro usuário'}.`)
+      return
+    }
+
+    // Clear any existing conflict message
+    if (hasGiftConflict(gift.id)) {
+      dispatch(clearGiftConflictMessage(gift.id))
+    }
+
+    // Notify WebSocket about selection
+    notifyGiftBeingSelected(gift.id, buyerName)
+    
+    // Start local selection
+    dispatch(startGiftSelection(gift.id, userId || '', buyerName))
+
     setSelectedGift(gift)
     setShowModal(true)
   }
 
   const handleConfirmPurchase = () => {
-    if (selectedGift && buyerName.trim()) {
-      dispatch(markGiftBoughtRequest(selectedGift.id, buyerName.trim()))
+    if (selectedGift && buyerName.trim() && userId) {
+      const giftVersion = giftVersions[selectedGift.id] || 1
+      
+      dispatch(markGiftBoughtRequest(
+        selectedGift.id, 
+        buyerName.trim(), 
+        giftVersion, 
+        userId
+      ))
+      
       setShowModal(false)
       setSelectedGift(null)
       setBuyerName('')
     }
   }
+
+  const handleCancelSelection = () => {
+    if (selectedGift) {
+      // Notify WebSocket about cancellation
+      notifyGiftSelectionCancelled(selectedGift.id)
+      
+      // Cancel local selection
+      dispatch(cancelGiftSelection(selectedGift.id))
+    }
+    
+    setShowModal(false)
+    setSelectedGift(null)
+    setBuyerName('')
+  }
+
+  // Auto-close modal when gift is selected by another user
+  useEffect(() => {
+    if (selectedGift && showModal) {
+      // Check if gift was selected by another user
+      if (selectedGift.status === 'comprado') {
+        alert(`Este presente já foi escolhido por ${selectedGift.boughtBy || 'outro usuário'}.`)
+        handleCancelSelection()
+        return
+      }
+
+      // Check if gift is being selected by another user
+      if (isGiftBeingSelected(selectedGift.id) && !isGiftSelectedByMe(selectedGift.id)) {
+        const selector = getGiftSelector(selectedGift.id)
+        alert(`Este presente agora está sendo selecionado por ${selector?.userName || 'outro usuário'}.`)
+        handleCancelSelection()
+        return
+      }
+
+      // Check for conflict messages
+      if (hasGiftConflict(selectedGift.id)) {
+        const conflict = conflictMessages[selectedGift.id]
+        alert(conflict.message)
+        handleCancelSelection()
+        return
+      }
+    }
+  }, [selectedGift, showModal, gifts, isGiftBeingSelected, isGiftSelectedByMe, getGiftSelector, hasGiftConflict, conflictMessages])
 
   const availableGifts = gifts.filter(gift => gift.status === 'disponivel')
   const purchasedGifts = gifts.filter(gift => gift.status === 'comprado')
@@ -104,13 +205,45 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                         </a>
                       )}
                       
-                      <button 
-                        className="btn btn-primary"
-                        onClick={() => handleMarkAsBought(gift)}
-                      >
-                        <i className="fas fa-heart me-2"></i>
-                        Vou dar este! 💝
-                      </button>
+                      {(() => {
+                        const beingSelected = isGiftBeingSelected(gift.id)
+                        const selectedByMe = isGiftSelectedByMe(gift.id)
+                        const selector = getGiftSelector(gift.id)
+                        
+                        if (beingSelected && !selectedByMe) {
+                          return (
+                            <button 
+                              className="btn btn-warning"
+                              disabled
+                            >
+                              <i className="fas fa-clock me-2"></i>
+                              Sendo selecionado por {selector?.userName || 'outro usuário'}...
+                            </button>
+                          )
+                        }
+                        
+                        if (beingSelected && selectedByMe) {
+                          return (
+                            <button 
+                              className="btn btn-info"
+                              disabled
+                            >
+                              <i className="fas fa-hand-paper me-2"></i>
+                              Você está selecionando...
+                            </button>
+                          )
+                        }
+                        
+                        return (
+                          <button 
+                            className="btn btn-primary"
+                            onClick={() => handleMarkAsBought(gift)}
+                          >
+                            <i className="fas fa-heart me-2"></i>
+                            Vou dar este! 💝
+                          </button>
+                        )
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -238,6 +371,22 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                 <p className="text-muted">
                   Você escolheu: <strong>{selectedGift?.name}</strong>
                 </p>
+                
+                {/* Connection status indicator */}
+                {!websocketConnected && (
+                  <div className="alert alert-warning" role="alert">
+                    <i className="fas fa-exclamation-triangle me-2"></i>
+                    Conexão instável. Atualizações em tempo real podem não funcionar.
+                  </div>
+                )}
+                
+                {/* Conflict message */}
+                {selectedGift && hasGiftConflict(selectedGift.id) && (
+                  <div className="alert alert-danger" role="alert">
+                    <i className="fas fa-exclamation-circle me-2"></i>
+                    {conflictMessages[selectedGift.id].message}
+                  </div>
+                )}
               </div>
 
               <div className="mb-3">
@@ -257,11 +406,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                 <button 
                   type="button"
                   className="btn btn-secondary-standard me-md-2"
-                  onClick={() => {
-                    setShowModal(false)
-                    setSelectedGift(null)
-                    setBuyerName('')
-                  }}
+                  onClick={handleCancelSelection}
                 >
                   <i className="fas fa-times me-2"></i>
                   Cancelar

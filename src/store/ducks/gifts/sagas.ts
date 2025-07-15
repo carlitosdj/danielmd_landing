@@ -32,7 +32,11 @@ function* markGiftBought(action: MarkGiftBoughtRequestAction) {
     const response: AxiosResponse<Gift> = yield call(
       api.put,
       `/gifts/${action.payload.giftId}/mark-as-bought`,
-      { boughtBy: action.payload.boughtBy }
+      { 
+        boughtBy: action.payload.boughtBy,
+        version: action.payload.version,
+        userId: action.payload.userId
+      }
     )
     yield put(markGiftBoughtSuccess(response.data))
   } catch (error: any) {

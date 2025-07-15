@@ -19,6 +19,7 @@ export interface Gift {
   imageUrl?: string;
   status: 'disponivel' | 'comprado';
   boughtBy?: string;
+  version: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -41,6 +42,8 @@ export interface CreateRsvpRequest {
 
 export interface MarkGiftBoughtRequest {
   boughtBy: string;
+  version: number;
+  userId?: string;
 }
 
 export interface Message {
