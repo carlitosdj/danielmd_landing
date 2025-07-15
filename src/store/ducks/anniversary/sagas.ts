@@ -14,7 +14,7 @@ import {
 } from './actions'
 import { Anniversary } from '../../../lib/types'
 
-function* loadAnniversaryBySlug(action: LoadAnniversaryBySlugRequestAction) {
+function* loadAnniversaryBySlug(action: LoadAnniversaryBySlugRequestAction): Generator<any, void, any> {
   const slug = action.payload.slug;
   
   // Função da API que será executada com reconexão
@@ -40,7 +40,7 @@ function* loadAnniversaryBySlug(action: LoadAnniversaryBySlugRequestAction) {
   }
 }
 
-function* loadActiveAnniversary() {
+function* loadActiveAnniversary(): Generator<any, void, any> {
   // Função da API que será executada com reconexão
   const apiCall = () => api.get<Anniversary>('/anniversaries/active');
   
@@ -78,7 +78,7 @@ function* loadActiveAnniversary() {
   }
 }
 
-export default function* anniversarySaga() {
+export default function* anniversarySaga(): Generator<any, void, any> {
   yield takeEvery(AnniversaryActionTypes.LOAD_ANNIVERSARY_BY_SLUG_REQUEST, loadAnniversaryBySlug)
   yield takeEvery(AnniversaryActionTypes.LOAD_ACTIVE_ANNIVERSARY_REQUEST, loadActiveAnniversary)
 }

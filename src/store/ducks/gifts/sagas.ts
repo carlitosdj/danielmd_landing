@@ -15,7 +15,7 @@ import {
 } from './actions'
 import { Gift } from '../../../lib/types'
 
-function* loadGifts(action: LoadGiftsRequestAction) {
+function* loadGifts(action: LoadGiftsRequestAction): Generator<any, void, any> {
   const slug = action.payload.slug;
   
   // Função da API que será executada com reconexão
@@ -41,7 +41,7 @@ function* loadGifts(action: LoadGiftsRequestAction) {
   }
 }
 
-function* markGiftBought(action: MarkGiftBoughtRequestAction) {
+function* markGiftBought(action: MarkGiftBoughtRequestAction): Generator<any, void, any> {
   const { giftId, boughtBy, version, userId } = action.payload;
   
   // Função da API que será executada com reconexão
@@ -71,7 +71,7 @@ function* markGiftBought(action: MarkGiftBoughtRequestAction) {
   }
 }
 
-export default function* giftsSaga() {
+export default function* giftsSaga(): Generator<any, void, any> {
   yield takeEvery(GiftsActionTypes.LOAD_GIFTS_REQUEST, loadGifts)
   yield takeEvery(GiftsActionTypes.MARK_GIFT_BOUGHT_REQUEST, markGiftBought)
 }

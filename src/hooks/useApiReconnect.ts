@@ -37,7 +37,7 @@ export function useApiReconnect<T>(
     setLoading(true);
     setError(null);
     
-    const result = await apiReconnectService.executeWithReconnect(
+    await apiReconnectService.executeWithReconnect(
       key,
       apiCall,
       (successData) => {
@@ -55,8 +55,6 @@ export function useApiReconnect<T>(
     
     setLoading(false);
     setAttempts(apiReconnectService.getAttempts(key));
-    
-    return result;
   }, [key, apiCall, maxAttempts]);
 
   // Função para limpar tentativas de reconexão

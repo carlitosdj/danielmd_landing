@@ -11,7 +11,7 @@ import {
   createRsvpFailure
 } from './actions'
 
-function* createRsvp(action: CreateRsvpRequestAction) {
+function* createRsvp(action: CreateRsvpRequestAction): Generator<any, void, any> {
   const { slug, guestName, adultsCount, childrenCount } = action.payload;
   
   // Função da API que será executada com reconexão
@@ -41,6 +41,6 @@ function* createRsvp(action: CreateRsvpRequestAction) {
   }
 }
 
-export default function* rsvpSaga() {
+export default function* rsvpSaga(): Generator<any, void, any> {
   yield takeEvery(RsvpActionTypes.CREATE_RSVP_REQUEST, createRsvp)
 }

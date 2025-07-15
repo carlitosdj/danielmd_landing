@@ -15,7 +15,7 @@ import {
 } from './actions'
 import { Message } from '../../../lib/types'
 
-function* loadMessages(action: LoadMessagesRequestAction) {
+function* loadMessages(action: LoadMessagesRequestAction): Generator<any, void, any> {
   const slug = action.payload.slug;
   
   // Função da API que será executada com reconexão
@@ -41,7 +41,7 @@ function* loadMessages(action: LoadMessagesRequestAction) {
   }
 }
 
-function* createMessage(action: CreateMessageRequestAction) {
+function* createMessage(action: CreateMessageRequestAction): Generator<any, void, any> {
   const { slug, guestName, guestEmail, message } = action.payload;
   
   // Função da API que será executada com reconexão
@@ -71,7 +71,7 @@ function* createMessage(action: CreateMessageRequestAction) {
   }
 }
 
-export default function* messagesSaga() {
+export default function* messagesSaga(): Generator<any, void, any> {
   yield takeEvery(MessagesActionTypes.LOAD_MESSAGES_REQUEST, loadMessages)
   yield takeEvery(MessagesActionTypes.CREATE_MESSAGE_REQUEST, createMessage)
 }
