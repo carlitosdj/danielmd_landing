@@ -369,11 +369,11 @@ export default function AnniversaryPageNew() {
         {/* Confirmação de Presença */}
         <section id="rsvp-section" className="modern-section section-bg-light">
           <div className="container-modern">
-            <div className="section-header">
+            {/* <div className="section-header">
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎪</div>
               <h2 className="section-title">Confirmar Presença</h2>
               <p className="section-subtitle">Venha fazer parte desta festa incrível! Sua presença é muito importante para nós! 💖</p>
-            </div>
+            </div> */}
             <RsvpSectionNew 
               slug={slug}
               submitted={rsvpSubmitted}
