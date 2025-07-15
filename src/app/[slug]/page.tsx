@@ -12,6 +12,7 @@ import RsvpSectionNew from '../../components/RsvpSectionNew'
 import MessagesSection from '../../components/MessagesSection'
 import PhotoGalleryNew from '../../components/PhotoGalleryNew'
 import PhotoGallery from '@/components/PhotoGallery'
+import LocationSection from '../../components/LocationSection'
 
 export default function AnniversaryPageNew() {
   const dispatch = useDispatch()
@@ -330,12 +331,12 @@ export default function AnniversaryPageNew() {
         </section>
 
         {/* Galeria de Momentos Especiais */}
-        <section className="modern-section section-bg-white" style={{ padding: '0' }}>
-          <div className="container-modern" style={{ paddingTop: '4rem', paddingBottom: '2rem' }}>
+        <section className="modern-section section-bg-white" style={{ padding: '0', paddingBottom: '4rem' }}>
+          <div className="container-modern" style={{ paddingTop: '1rem'  }}>
             <div className="section-header">
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📸</div>
-              <h2 className="section-title">Momentos Especiais</h2>
-              <p className="section-subtitle">Relembre os melhores momentos dessa jornada incrível!</p>
+              <h2 className="section-title">Uau, como passou rápido.</h2>
+              <p className="section-subtitle">Vamos relembrar os momentos dessa jornada incrível! 💖</p>
             </div>
           </div>
           <PhotoGallery slug={slug} />
@@ -380,11 +381,11 @@ export default function AnniversaryPageNew() {
                 <div className="pix-card">
                   <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📱</div>
                   <div style={{ marginBottom: '1rem', fontWeight: '600' }}>Chave PIX:</div>
-                  <div className="pix-key">01605743666</div>
+                  <div className="pix-key">01075089662</div>
                   <button 
                     className="btn-copy"
                     onClick={() => {
-                      navigator.clipboard.writeText('01605743666')
+                      navigator.clipboard.writeText('01075089662')
                       alert('Chave PIX copiada! 📋')
                     }}
                   >
@@ -446,6 +447,9 @@ export default function AnniversaryPageNew() {
             />
           </div>
         </section>
+
+        {/* Como Chegar */}
+        <LocationSection address={anniversary.address} />
 
         {/* Footer */}
         <footer className="footer-section">

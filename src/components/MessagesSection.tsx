@@ -45,16 +45,16 @@ export default function MessagesSection({ messages, loading, slug }: MessagesSec
     <div>
       {/* Header da seção */}
       <div className="text-center mb-5">
-        <h2 className="text-white mb-3">
+        {/* <h2 className="text-white mb-3">
           <i className="fas fa-comments me-3"></i>
           Mensagens de Carinho
         </h2>
         <p className="text-white-50 fs-5">
           Deixe uma mensagem especial e veja o que outros convidados escreveram! 💕
-        </p>
+        </p> */}
         
         <button 
-          className="btn btn-primary-fun btn-lg"
+          className="btn btn-primary btn-lg"
           onClick={() => setShowForm(true)}
         >
           <i className="fas fa-pen me-2"></i>

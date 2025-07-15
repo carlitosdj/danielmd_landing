@@ -93,16 +93,28 @@ export default function RsvpSectionNew({ slug, submitted }: RsvpSectionProps) {
           </div>
         </div>
 
-        <div className="grid-2" style={{ gap: '1rem' }}>
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          /* '@media (min-width: 768px)': {
+            flexDirection: 'row'
+          } */
+        }}>
           <button 
             className="btn-modern"
             onClick={() => document.getElementById('gifts-section')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ flex: 1 }}
           >
             🎁 Ver Presentes
           </button>
           <button 
             className="btn-modern"
-            style={{ background: 'var(--gray-200)', color: 'var(--gray-700)' }}
+            style={{ 
+              background: 'var(--gray-200)', 
+              color: 'var(--gray-700)',
+              flex: 1
+            }}
             onClick={() => document.getElementById('messages-section')?.scrollIntoView({ behavior: 'smooth' })}
           >
             💌 Deixar Mensagem

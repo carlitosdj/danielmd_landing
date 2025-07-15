@@ -69,8 +69,9 @@ export default function PhotoGallery({ slug }: PhotoGalleryProps) {
       {/* Estilo customizado para a galeria */}
       <style jsx>{`
         .photo-gallery-modern {
-          // background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(30, 64, 175, 0.08) 100%);
-          padding: 3rem 0 4rem 0;
+          /* background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(30, 64, 175, 0.08) 100%); */
+          /* padding: 3rem 0 4rem 0; */
+          
           overflow: hidden;
           position: relative;
           width: 100vw;
@@ -105,7 +106,7 @@ export default function PhotoGallery({ slug }: PhotoGalleryProps) {
           left: 0;
           right: 0;
           bottom: 0;
-          // background: linear-gradient(135deg, transparent 0%, rgba(56, 189, 248, 0.1) 100%);
+          /* background: linear-gradient(135deg, transparent 0%, rgba(56, 189, 248, 0.1) 100%); */
           opacity: 0;
           transition: opacity 0.3s ease;
           z-index: 2;
@@ -179,8 +180,8 @@ export default function PhotoGallery({ slug }: PhotoGalleryProps) {
         
         .photo-modal-close-modern {
           position: absolute;
-          top: -60px;
-          right: -60px;
+          top: -30px;
+          right: -50px;
           width: 50px;
           height: 50px;
         }
@@ -256,7 +257,8 @@ export default function PhotoGallery({ slug }: PhotoGalleryProps) {
           width: '100%',
           overflow: 'hidden',
           position: 'relative',
-          height: '400px',
+          //height: '400px',
+          padding: '3rem',
           display: 'flex',
           alignItems: 'center'
         }}>
