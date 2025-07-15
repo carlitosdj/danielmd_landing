@@ -50,12 +50,12 @@ export default function HomePage() {
           <div className="shape"></div>
         </div>
         
-        <div className="modern-card p-5 text-center" style={{ maxWidth: '500px' }}>
+        <div className="modern-card p-5 m-3 text-center " style={{ maxWidth: '500px' }}>
           <i className="fas fa-birthday-cake fa-3x text-muted mb-4"></i>
-          <h2 className="mb-3">Ops! Algo deu errado</h2>
+          <h2 className="mb-3 ">Ops! Algo deu errado</h2>
           <p className="text-muted mb-4">{error}</p>
           <button 
-            className="btn btn-primary-fun"
+            className="btn btn-primary"
             onClick={() => dispatch(loadActiveAnniversaryRequest())}
           >
             <i className="fas fa-redo me-2"></i>
