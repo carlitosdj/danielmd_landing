@@ -301,8 +301,10 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
           </div>
         </div>
 
-        {/* Mapa ocupando toda a largura */}
-        <div style={{ 
+        
+      </div>
+      {/* Mapa ocupando toda a largura */}
+      <div style={{ 
           width: '100%', 
           height: '400px', 
           position: 'relative',
@@ -363,7 +365,6 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
             ></div>
           )}
         </div>
-      </div>
     </section>
   )
 }
