@@ -202,68 +202,7 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
           </div>
         </div>
 
-        {/* Mapa ocupando toda a largura */}
-        <div style={{ 
-          width: '100%', 
-          height: '400px', 
-          position: 'relative',
-          marginBottom: '2rem'
-        }}>
-          {!mapLoaded && !error ? (
-            <div style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'var(--gray-100)',
-              borderRadius: 'var(--radius-lg)'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                color: 'var(--gray-500)'
-              }}>
-                <div style={{
-                  width: '24px',
-                  height: '24px',
-                  border: '3px solid var(--gray-300)',
-                  borderTop: '3px solid var(--primary-blue)',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite'
-                }}></div>
-                <span>Carregando mapa...</span>
-              </div>
-            </div>
-          ) : error ? (
-            <div style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'var(--gray-100)',
-              borderRadius: 'var(--radius-lg)',
-              color: 'var(--gray-500)'
-            }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🗺️</div>
-                <p>{error}</p>
-              </div>
-            </div>
-          ) : (
-            <div 
-              id="google-map" 
-              style={{ 
-                width: '100%', 
-                height: '100%',
-                borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden'
-              }}
-            ></div>
-          )}
-        </div>
+        
 
         {/* Informações e botões */}
         <div className="container-modern">
@@ -360,6 +299,69 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Mapa ocupando toda a largura */}
+        <div style={{ 
+          width: '100%', 
+          height: '400px', 
+          position: 'relative',
+          marginBottom: '2rem'
+        }}>
+          {!mapLoaded && !error ? (
+            <div style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--gray-100)',
+              borderRadius: 'var(--radius-lg)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                color: 'var(--gray-500)'
+              }}>
+                <div style={{
+                  width: '24px',
+                  height: '24px',
+                  border: '3px solid var(--gray-300)',
+                  borderTop: '3px solid var(--primary-blue)',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div>
+                <span>Carregando mapa...</span>
+              </div>
+            </div>
+          ) : error ? (
+            <div style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--gray-100)',
+              borderRadius: 'var(--radius-lg)',
+              color: 'var(--gray-500)'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🗺️</div>
+                <p>{error}</p>
+              </div>
+            </div>
+          ) : (
+            <div 
+              id="google-map" 
+              style={{ 
+                width: '100%', 
+                height: '100%',
+                borderRadius: 'var(--radius-lg)',
+                overflow: 'hidden'
+              }}
+            ></div>
+          )}
         </div>
       </div>
     </section>
