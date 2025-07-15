@@ -25,7 +25,8 @@ export const useMessagesWebSocket = (anniversaryId?: number) => {
   useEffect(() => {
     if (!anniversaryId) return;
 
-    const apiUrl = 'http://localhost:3010';
+    //const apiUrl = 'http://localhost:3010';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3010';
     
     // Connect to messages WebSocket
     const messagesSocket = io(`${apiUrl}/messages`, {

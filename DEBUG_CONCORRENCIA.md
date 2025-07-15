@@ -2,7 +2,7 @@
 
 ## 🔍 Possíveis problemas identificados:
 
-1. **Porta da API estava errada**: Alterada de 3010 para 4000
+1. **Porta da API estava errada**: Alterada de 3010
 2. **Logs de debug adicionados** para rastrear o funcionamento
 
 ## 🧪 Como testar:
@@ -11,12 +11,12 @@
 1. Abra o DevTools (F12) no navegador
 2. Vá para a aba **Console**
 3. Procure por logs como:
-   - `"Conectando WebSocket para: http://localhost:4000/gifts"`
-   - `"WebSocket conectado para: http://localhost:4000/gifts"`
+   - `"Conectando WebSocket para: http://localhost:3010/gifts"`
+   - `"WebSocket conectado para: http://localhost:3010/gifts"`
 
 ### 2. **Verificar se API está rodando**
-1. Certifique-se que a API está rodando na porta **4000**
-2. Teste no navegador: `http://localhost:4000/gifts`
+1. Certifique-se que a API está rodando na porta **3010**
+2. Teste no navegador: `http://localhost:3010/gifts`
 
 ### 3. **Testar concorrência**
 1. Abra **2 dispositivos** (ou 2 abas)
@@ -36,7 +36,7 @@ No console, procure por:
 ## 🚨 Possíveis problemas:
 
 ### **Se não aparecer "WebSocket conectado":**
-- Verificar se API está rodando na porta 4000
+- Verificar se API está rodando na porta 3010
 - Verificar configuração CORS no backend
 - Verificar variável `NEXT_PUBLIC_API_URL`
 
@@ -54,7 +54,7 @@ No console, procure por:
 
 ### Frontend (.env.local):
 ```
-NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_API_URL=http://localhost:3010
 ```
 
 ### Backend (.env):
@@ -64,7 +64,7 @@ FRONTEND_URL=http://localhost:3001
 
 ## 📋 Checklist de debug:
 
-- [ ] API rodando na porta 4000
+- [ ] API rodando na porta 3010
 - [ ] Frontend consegue conectar WebSocket
 - [ ] Console mostra "WebSocket conectado"
 - [ ] Console mostra "Enviando gift-being-selected" ao confirmar
