@@ -1,7 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import api from '../../../lib/api'
-import { apiReconnectService } from '../../../services/api-reconnect.service'
 import { 
   MessagesActionTypes,
   LoadMessagesRequestAction,
@@ -18,17 +17,10 @@ import { Message } from '../../../lib/types'
 function* loadMessages(action: LoadMessagesRequestAction): Generator<any, void, any> {
   const slug = action.payload.slug;
   
-  // Função da API que será executada com reconexão
-  const apiCall = () => api.get<Message[]>(`/anniversaries/${slug}/messages`);
-  
   try {
     const response: AxiosResponse<Message[]> = yield call(
-      [apiReconnectService, 'executeWithReconnect'],
-      `load-messages-${slug}`,
-      apiCall,
-      undefined, // onSuccess será tratado pelo saga
-      undefined, // onError será tratado pelo saga
-      Infinity // Tentar infinitamente
+      api.get,
+      `/anniversaries/${slug}/messages`
     );
     
     if (response && response.data) {
@@ -36,7 +28,7 @@ function* loadMessages(action: LoadMessagesRequestAction): Generator<any, void, 
     }
   } catch (error: any) {
     const errorMessage = error.response?.data?.message || 'Erro ao carregar mensagens';
-    console.log(`🔄 API Messages: Erro capturado, serviço de reconexão ativo`);
+    console.error('❌ Erro ao carregar mensagens:', error);
     yield put(loadMessagesFailure(errorMessage));
   }
 }
@@ -44,21 +36,15 @@ function* loadMessages(action: LoadMessagesRequestAction): Generator<any, void, 
 function* createMessage(action: CreateMessageRequestAction): Generator<any, void, any> {
   const { slug, guestName, guestEmail, message } = action.payload;
   
-  // Função da API que será executada com reconexão
-  const apiCall = () => api.post<Message>(`/anniversaries/${slug}/messages`, {
-    guestName,
-    guestEmail,
-    message
-  });
-  
   try {
     const response: AxiosResponse<Message> = yield call(
-      [apiReconnectService, 'executeWithReconnect'],
-      `create-message-${slug}-${Date.now()}`,
-      apiCall,
-      undefined, // onSuccess será tratado pelo saga
-      undefined, // onError será tratado pelo saga
-      5 // Máximo 5 tentativas para ações do usuário
+      api.post,
+      `/anniversaries/${slug}/messages`,
+      {
+        guestName,
+        guestEmail,
+        message
+      }
     );
     
     if (response && response.data) {
@@ -66,7 +52,7 @@ function* createMessage(action: CreateMessageRequestAction): Generator<any, void
     }
   } catch (error: any) {
     const errorMessage = error.response?.data?.message || 'Erro ao enviar mensagem';
-    console.log(`🔄 API CreateMessage: Erro capturado, serviço de reconexão ativo`);
+    console.error('❌ Erro ao enviar mensagem:', error);
     yield put(createMessageFailure(errorMessage));
   }
 }

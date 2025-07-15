@@ -1,7 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import api from '../../../lib/api'
-import { apiReconnectService } from '../../../services/api-reconnect.service'
 import { 
   AnniversaryActionTypes,
   LoadAnniversaryBySlugRequestAction
@@ -17,17 +16,10 @@ import { Anniversary } from '../../../lib/types'
 function* loadAnniversaryBySlug(action: LoadAnniversaryBySlugRequestAction): Generator<any, void, any> {
   const slug = action.payload.slug;
   
-  // Função da API que será executada com reconexão
-  const apiCall = () => api.get<Anniversary>(`/anniversaries/by-slug/${slug}`);
-  
   try {
     const response: AxiosResponse<Anniversary> = yield call(
-      [apiReconnectService, 'executeWithReconnect'],
-      `load-anniversary-${slug}`,
-      apiCall,
-      undefined, // onSuccess será tratado pelo saga
-      undefined, // onError será tratado pelo saga
-      Infinity // Tentar infinitamente
+      api.get,
+      `/anniversaries/by-slug/${slug}`
     );
     
     if (response && response.data) {
@@ -35,25 +27,18 @@ function* loadAnniversaryBySlug(action: LoadAnniversaryBySlugRequestAction): Gen
     }
   } catch (error: any) {
     const errorMessage = error.response?.data?.message || 'Erro ao carregar aniversário';
-    console.log(`🔄 API Anniversary: Erro capturado, serviço de reconexão ativo`);
+    console.error('❌ Erro ao carregar aniversário:', error);
     yield put(loadAnniversaryBySlugFailure(errorMessage));
   }
 }
 
 function* loadActiveAnniversary(): Generator<any, void, any> {
-  // Função da API que será executada com reconexão
-  const apiCall = () => api.get<Anniversary>('/anniversaries/active');
-  
   try {
     console.log('🔄 Tentando carregar aniversário ativo...');
     
     const response: AxiosResponse<Anniversary> = yield call(
-      [apiReconnectService, 'executeWithReconnect'],
-      'load-active-anniversary',
-      apiCall,
-      undefined, // onSuccess será tratado pelo saga
-      undefined, // onError será tratado pelo saga
-      Infinity // Tentar infinitamente
+      api.get,
+      '/anniversaries/active'
     );
     
     if (response && response.data) {
@@ -62,14 +47,13 @@ function* loadActiveAnniversary(): Generator<any, void, any> {
     }
   } catch (error: any) {
     console.error('❌ Erro ao carregar aniversário ativo:', error);
-    console.log(`🔄 API ActiveAnniversary: Erro capturado, serviço de reconexão ativo`);
     
     let errorMessage = 'Erro ao carregar aniversário ativo';
     
     if (error.response) {
       errorMessage = error.response.data?.message || `Erro ${error.response.status}: ${error.response.statusText}`;
     } else if (error.request) {
-      errorMessage = 'Erro de conexão com a API. Tentando reconectar...';
+      errorMessage = 'Erro de conexão com a API';
     } else {
       errorMessage = error.message || 'Erro interno';
     }
