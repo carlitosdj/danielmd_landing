@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import api from '../../../lib/api'
+import { apiReconnectService } from '../../../services/api-reconnect.service'
 import { 
   GiftsActionTypes,
   LoadGiftsRequestAction,
@@ -15,33 +16,58 @@ import {
 import { Gift } from '../../../lib/types'
 
 function* loadGifts(action: LoadGiftsRequestAction) {
+  const slug = action.payload.slug;
+  
+  // Função da API que será executada com reconexão
+  const apiCall = () => api.get<Gift[]>(`/anniversaries/${slug}/gifts`);
+  
   try {
     const response: AxiosResponse<Gift[]> = yield call(
-      api.get,
-      `/anniversaries/${action.payload.slug}/gifts`
-    )
-    yield put(loadGiftsSuccess(response.data))
+      [apiReconnectService, 'executeWithReconnect'],
+      `load-gifts-${slug}`,
+      apiCall,
+      undefined, // onSuccess será tratado pelo saga
+      undefined, // onError será tratado pelo saga
+      Infinity // Tentar infinitamente
+    );
+    
+    if (response && response.data) {
+      yield put(loadGiftsSuccess(response.data));
+    }
   } catch (error: any) {
-    const errorMessage = error.response?.data?.message || 'Erro ao carregar presentes'
-    yield put(loadGiftsFailure(errorMessage))
+    const errorMessage = error.response?.data?.message || 'Erro ao carregar presentes';
+    console.log(`🔄 API Gifts: Erro capturado, serviço de reconexão ativo`);
+    yield put(loadGiftsFailure(errorMessage));
   }
 }
 
 function* markGiftBought(action: MarkGiftBoughtRequestAction) {
+  const { giftId, boughtBy, version, userId } = action.payload;
+  
+  // Função da API que será executada com reconexão
+  const apiCall = () => api.put<Gift>(`/gifts/${giftId}/mark-as-bought`, {
+    boughtBy,
+    version,
+    userId
+  });
+  
   try {
     const response: AxiosResponse<Gift> = yield call(
-      api.put,
-      `/gifts/${action.payload.giftId}/mark-as-bought`,
-      { 
-        boughtBy: action.payload.boughtBy,
-        version: action.payload.version,
-        userId: action.payload.userId
-      }
-    )
-    yield put(markGiftBoughtSuccess(response.data))
+      [apiReconnectService, 'executeWithReconnect'],
+      `mark-gift-bought-${giftId}`,
+      apiCall,
+      undefined, // onSuccess será tratado pelo saga
+      undefined, // onError será tratado pelo saga
+      5 // Máximo 5 tentativas para ações do usuário
+    );
+    
+    if (response && response.data) {
+      yield put(markGiftBoughtSuccess(response.data));
+    }
   } catch (error: any) {
-    const errorMessage = error.response?.data?.message || 'Erro ao marcar presente como comprado'
-    yield put(markGiftBoughtFailure(errorMessage))
+    const errorMessage = error.response?.data?.message || 'Erro ao marcar presente como comprado';
+    console.log(`🔄 API MarkGift: Erro capturado, serviço de reconexão ativo`);
+    yield put(markGiftBoughtFailure(errorMessage));
   }
 }
 

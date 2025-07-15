@@ -53,8 +53,9 @@ class WebSocketService {
   private isConnected = false;
   private currentSlug: string | null = null;
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
-  private reconnectInterval = 1000;
+  private maxReconnectAttempts = Infinity; // Tentar reconexão infinitamente
+  private reconnectInterval = 15000; // 15 segundos
+  private reconnectTimer: NodeJS.Timeout | null = null;
 
   // Callbacks para eventos
   private onGiftBeingSelectedCallback?: (event: GiftBeingSelectedEvent) => void;
@@ -78,13 +79,12 @@ class WebSocketService {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
     const socketUrl = `${apiUrl}/gifts`;
 
-    console.log('Conectando WebSocket para:', socketUrl);
+    console.log('🔌 Conectando WebSocket para:', socketUrl);
 
     this.socket = io(socketUrl, {
       transports: ['websocket', 'polling'],
       timeout: 10000,
-      reconnectionAttempts: this.maxReconnectAttempts,
-      reconnectionDelay: this.reconnectInterval,
+      reconnection: false, // Desabilitar reconexão automática do socket.io
     });
 
     this.currentSlug = slug;
@@ -93,6 +93,8 @@ class WebSocketService {
   }
 
   disconnect(): void {
+    this.clearReconnectTimer();
+    
     if (this.socket) {
       this.socket.disconnect();
       this.socket = null;
@@ -103,14 +105,38 @@ class WebSocketService {
     this.onConnectionChangeCallback?.(false);
   }
 
+  private clearReconnectTimer(): void {
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = null;
+    }
+  }
+
+  private scheduleReconnect(): void {
+    this.clearReconnectTimer();
+    
+    if (this.currentSlug) {
+      this.reconnectAttempts++;
+      console.log(`⏰ Agendando reconexão WebSocket em 15s (tentativa ${this.reconnectAttempts})`);
+      
+      this.reconnectTimer = setTimeout(() => {
+        if (this.currentSlug && !this.isConnected) {
+          console.log(`🔄 Tentando reconectar WebSocket (tentativa ${this.reconnectAttempts})`);
+          this.connect(this.currentSlug);
+        }
+      }, this.reconnectInterval);
+    }
+  }
+
   private setupEventListeners(socketUrl: string): void {
     if (!this.socket) return;
 
     this.socket.on('connect', () => {
       this.isConnected = true;
       this.reconnectAttempts = 0;
+      this.clearReconnectTimer();
       this.onConnectionChangeCallback?.(true);
-      console.log('WebSocket conectado para:', socketUrl);
+      console.log('✅ WebSocket conectado para:', socketUrl);
       
       // Rejoin anniversary se necessário
       if (this.currentSlug) {
@@ -118,16 +144,24 @@ class WebSocketService {
       }
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on('disconnect', (reason) => {
       this.isConnected = false;
       this.onConnectionChangeCallback?.(false);
-      console.log('WebSocket desconectado');
+      console.log('❌ WebSocket desconectado:', reason);
+      
+      // Agendar reconexão apenas se não foi desconexão manual
+      if (reason !== 'io client disconnect') {
+        this.scheduleReconnect();
+      }
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('Erro de conexão WebSocket:', error);
+      console.error('❌ Erro de conexão WebSocket:', error);
       this.isConnected = false;
       this.onConnectionChangeCallback?.(false);
+      
+      // Agendar reconexão em caso de erro
+      this.scheduleReconnect();
     });
 
     // Eventos de presentes
