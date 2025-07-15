@@ -73,7 +73,7 @@ export const useWebSocket = (slug: string) => {
         websocketService.connect(slug);
         slugRef.current = slug;
       } catch (error) {
-        dispatch(websocketConnectFailure({ error: 'Erro ao conectar WebSocket' }));
+        dispatch(websocketConnectFailure('Erro ao conectar WebSocket'));
       }
     }
 

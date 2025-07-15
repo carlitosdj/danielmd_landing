@@ -314,7 +314,7 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
                 {selectedGift && hasGiftConflict(selectedGift.id) && (
                   <div className="alert alert-danger" role="alert">
                     <i className="fas fa-exclamation-circle me-2"></i>
-                    {conflictMessages[selectedGift.id].message}
+                    {conflictMessages[selectedGift.id]?.message}
                   </div>
                 )}
               </div>

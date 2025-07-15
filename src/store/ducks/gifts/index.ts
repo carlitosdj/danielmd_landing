@@ -1,5 +1,6 @@
 import { Reducer } from 'redux'
 import { GiftsState, GiftsAction, GiftsActionTypes } from './types'
+import { Gift } from '../../../lib/types'
 
 const INITIAL_STATE: GiftsState = {
   items: [],
@@ -29,7 +30,7 @@ const reducer: Reducer<GiftsState> = (state = INITIAL_STATE, action) => {
       }
 
     case GiftsActionTypes.LOAD_GIFTS_SUCCESS:
-      const giftVersions = action.payload.data.reduce((acc, gift) => {
+      const giftVersions = action.payload.data.reduce((acc: { [giftId: number]: number }, gift: Gift) => {
         acc[gift.id] = gift.version || 1;
         return acc;
       }, {} as { [giftId: number]: number });
