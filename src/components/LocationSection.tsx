@@ -303,7 +303,7 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
                 gap: "1rem",
               }}
             >
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -314,8 +314,8 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
                 <span style={{ fontSize: "0.9rem" }}>
                   Estacionamento disponível no local
                 </span>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -326,7 +326,7 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
                 <span style={{ fontSize: "0.9rem" }}>
                   Acesso por transporte público
                 </span>
-              </div>
+              </div> */}
               <div
                 style={{
                   display: "flex",
@@ -349,6 +349,18 @@ export default function LocationSection({ address, id }: LocationSectionProps) {
                 <span style={{ fontSize: "1.2rem" }}>📱</span>
                 <span style={{ fontSize: "0.9rem" }}>
                   Tenha o endereço salvo no celular
+                </span>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                }}
+              >
+                <span style={{ fontSize: "1.2rem" }}>📞</span>
+                <span style={{ fontSize: "0.9rem" }}>
+                  Dúvidas? Entre em contato com a mamãe: 34 - 991624795!
                 </span>
               </div>
             </div>

@@ -140,50 +140,42 @@ export default function GiftsSection({ gifts, loading, slug }: GiftsSectionProps
             </p>
           </div> */}
 
-          <div className="row g-3">
+          <div className="row">
             {availableGifts.map((gift) => (
-              <div key={gift.id} className="col-12">
-                <div className="gift-card d-flex align-items-center p-3">
+              <div key={gift.id} className="col-md-6 col-lg-4 mb-4">
+                <div className="gift-card h-100">
                   {gift.imageUrl && (
-                    <div className="flex-shrink-0 me-4">
-                      <img 
-                        src={gift.imageUrl} 
-                        alt={gift.name}
-                        className="rounded-3"
-                        style={{ 
-                          width: '100px', 
-                          height: '100px', 
-                          objectFit: 'cover' 
-                        }}
-                      />
-                    </div>
+                    <img 
+                      src={gift.imageUrl} 
+                      alt={gift.name}
+                      className="card-img-top"
+                      style={{ height: '250px', objectFit: 'cover' }}
+                    />
                   )}
                   
-                  <div className="flex-grow-1 min-width-0">
-                    <div className="d-flex flex-column justify-content-between h-100">
-                      <h6 className="card-title mb-3">{gift.name}</h6>
-                      
-                      <div className="d-flex flex-column flex-sm-row gap-2">
-                        {gift.linkUrl && (
-                          <a 
-                            href={gift.linkUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-outline-primary btn-sm rounded-pill flex-shrink-0"
-                          >
-                            <i className="fas fa-external-link-alt me-2"></i>
-                            Ver na loja
-                          </a>
-                        )}
-                        
-                        <button 
-                          className="btn btn-primary btn-sm flex-grow-1"
-                          onClick={() => handleMarkAsBought(gift)}
+                  <div className="p-4">
+                    <h5 className="card-title mb-3">{gift.name}</h5>
+                    
+                    <div className="d-grid gap-2">
+                      {gift.linkUrl && (
+                        <a 
+                          href={gift.linkUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-outline-primary rounded-pill"
                         >
-                          <i className="fas fa-heart me-2"></i>
-                          Vou dar este! 💝
-                        </button>
-                      </div>
+                          <i className="fas fa-external-link-alt me-2"></i>
+                          Ver na loja
+                        </a>
+                      )}
+                      
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => handleMarkAsBought(gift)}
+                      >
+                        <i className="fas fa-heart me-2"></i>
+                        Vou dar este! 💝
+                      </button>
                     </div>
                   </div>
                 </div>

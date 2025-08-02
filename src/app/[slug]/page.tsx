@@ -386,8 +386,8 @@ export default function AnniversaryPageNew() {
           <div className="container-modern">
             <div className="section-header">
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎁</div>
-              <h2 className="section-title">Lista de Presentes</h2>
-              <p className="section-subtitle">Escolha um presente especial ou contribua via PIX para tornar este dia ainda mais especial! 💝</p>
+              <h2 className="section-title">Sugestões de Presentes</h2>
+              <p className="section-subtitle">Um toque de carinho faz toda a diferença — escolha um presente especial e celebre com a gente! ✨</p>
             </div>
             <GiftsSection 
               gifts={gifts} 
@@ -398,7 +398,7 @@ export default function AnniversaryPageNew() {
             {/* Seção PIX */}
             <div className="pix-section">
               <div className="pix-content">
-                <h3 className="pix-title">💰 Contribuição via PIX</h3>
+                <h3 className="pix-title">💰 Presente via PIX</h3>
                 <p className="pix-description">
                   Prefere contribuir de forma prática? Use nossa chave PIX e ajude a tornar este dia ainda mais especial!
                 </p>
@@ -486,9 +486,9 @@ export default function AnniversaryPageNew() {
                 justifyContent: 'center',
                 gap: '15px'
               }}>
-                <span style={{ animation: 'float 2s ease-in-out infinite' }}>💖</span>
+                <span style={{ animation: 'float 2s ease-in-out infinite' }}>🎉</span>
                 <span style={{ animation: 'float 2s ease-in-out infinite 0.3s' }}>🌟</span>
-                <span style={{ animation: 'float 2s ease-in-out infinite 0.6s' }}>💖</span>
+                <span style={{ animation: 'float 2s ease-in-out infinite 0.6s' }}>🎈</span>
               </div>
               <h3 className="footer-title">
                 Obrigado por fazer parte desta celebração! 🥰
@@ -498,6 +498,13 @@ export default function AnniversaryPageNew() {
               </p>
             </div>
           </div>
+          {/* Página criada pelo papai: */}
+          <p className="footer-text text-white" style={{ paddingTop: '2rem' }}>
+            Página criada pelo papai Carlos Defelicibus Junior <a href="https://www.instagram.com/carlosdefelicibusjr/" target="_blank" rel="noopener noreferrer">
+            <br/>
+              <i className="fab fa-instagram text-white" style={{ marginLeft: '0.5rem' }}></i> <span className='text-white'>Instagram</span>
+            </a>
+          </p>
         </footer>
       </div>
       
