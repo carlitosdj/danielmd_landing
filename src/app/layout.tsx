@@ -12,10 +12,23 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <title>Daniel MD - Aniversários</title>
-        <meta name="description" content="Festas de aniversário do Daniel" />
+        <title>Daniel Marques Defelícibus</title>
+        <meta name="description" content="1 Aninho do Daniel" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        
+        {/* Open Graph meta tags for WhatsApp sharing */}
+        <meta property="og:title" content="Daniel Marques Defelícibus" />
+        <meta property="og:description" content="Meu Primeiro Aninho! Confirme sua presença!" />
+        <meta property="og:image" content="https://danielmd.com.br/imgs/1-ano/img6.jpg" />
+        <meta property="og:url" content="https://danielmd.com.br" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Card meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Daniel Marques Defelícibus" />
+        <meta name="twitter:description" content="Meu Primeiro Aninho! Confirme sua presença!" />
+        <meta name="twitter:image" content="https://danielmd.com.br/imgs/1-ano/img6.jpg" />
         
         {/* Bootstrap CSS */}
         <link 
